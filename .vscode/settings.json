@@ -1,0 +1,29 @@
+{
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.linting.banditEnabled": true,
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "python.linting.banditArgs": [
+        "--ignore=B101",
+    ],
+    "autoDocstring.docstringFormat": "numpy",
+    "editor.rulers": [
+        100,
+    ],
+    "git.ignoreLimitWarning": true
+}
