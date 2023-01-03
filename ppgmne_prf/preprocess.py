@@ -32,9 +32,25 @@ from ppgmne_prf.utils import (
     trace_df,
 )
 
+
+def preprocess(df_accidents: pd.DataFrame, dict_stations: dict) -> pd.DataFrame:
+    logger.info("Pre-process - Início do pré-processamento dos dados de entrada.")
+
+    logger.info("Pre-process (accidents) - Início do pré-processamento dos dados dos acidentes.")
+    df_accidents = __preprocess_accidents(df_accidents)
+
+    logger.info("Pre-process (stations) - Início do pré-processamento dos dados das estações policiais.")
+    df_stations = __preprocess_stations(dict_stations)
+
+    logger.info("Pre-process (quadrants) - Início do pré-processamento dos dados dos quadrantes.")
+    df_quadrants = __preprocess_quadrants(df_accidents, df_stations)
+
+    logger.info("Pre-process - Fim do pré-processamento dos dados de entrada.")
+    return df_quadrants
+
 ########## Accidents ##########
 
-def preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
+def __preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
 
     logger.info("Pre-process (accidents) - Removendo registros incompletos.")
     df = df.dropna().pipe(trace_df).copy()
@@ -67,7 +83,7 @@ def preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-def preprocess_stations(dict_coords: dict) -> pd.DataFrame:
+def __preprocess_stations(dict_coords: dict) -> pd.DataFrame:
     
     logger.info("Pre-process (stations) - Estruturando os dados das estações policiais.") 
 
@@ -170,15 +186,12 @@ def preprocess_stations(dict_coords: dict) -> pd.DataFrame:
     return df_out
 
 
-def preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.DataFrame:
+def __preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.DataFrame:
 
     # Seleciona as UOPs:
     df_uops = df_stations.query('type == "UOP"').copy()
     df_uops["latitude"] = df_uops["latitude"].round(COORDS_PRECISION)
     df_uops["longitude"] = df_uops["longitude"].round(COORDS_PRECISION)
-
-    print(df_uops.head())
-    print(df_uops.columns)
 
     df = (
         df.pipe(trace_df)
