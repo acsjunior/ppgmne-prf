@@ -1,39 +1,51 @@
-from loguru import logger
-
-from ppgmne_prf.load_data import load_accidents, load_stations
-from ppgmne_prf.preprocess import (
-    preprocess_accidents,
-    preprocess_quadrants,
-    preprocess_stations,
+from ppgmne_prf.load_data import load_data
+from ppgmne_prf.optim import (
+    get_abstract_model,
+    get_fixed_params,
+    get_instance,
+    get_solution_data,
+    solve_instance,
 )
+from ppgmne_prf.preprocess import preprocess
 
 
 def main():
-    ########## Load data  ##########
-    logger.info("Load data - Início do carregamento os dados de entrada.")
+    df_accidents, dict_stations = load_data()
+    df_quadrants = preprocess(df_accidents, dict_stations)
 
-    logger.info("Load data (accidents) - Carregando os dados históricos dos acidentes.")
-    df_accidents = load_accidents()
+    # Modelo
+    dict_params = get_fixed_params(df_quadrants)
 
-    logger.info("Load data (stations) - Carregando as coordenadas das UOPs e delegacias.")
-    stations_coords = load_stations()
+    # Cria o modelo abstrato:
+    model = get_abstract_model(
+        a=dict_params["a"],
+        u=dict_params["u"],
+        s=dict_params["s"],
+        dist_max=dict_params["dist_max"],
+        dist_matrix=dict_params["dist_matrix"],
+        accidents_hist=dict_params["accidents_hist"],
+    )
 
-    logger.info("Load data - Fim do carregamento os dados de entrada.")
+    memory_p = [True for x in range(1,81)]
+    for q in range(34):
 
-    ########## Pre-process  ##########
-    logger.info("Pre-process - Início do pré-processamento dos dados de entrada.")
+        # for p in range(1,81):
+        for p in range(29,81):
 
-    logger.info("Pre-process (accidents) - Início do pré-processamento dos dados dos acidentes.")
-    df_accidents = preprocess_accidents(df_accidents)
+            if p >= q and memory_p[p-1]:
 
-    logger.info("Pre-process (stations) - Início do pré-processamento dos dados das estações policiais.")
-    df_stations = preprocess_stations(stations_coords)
+                # Cria a instância:
+                instance = get_instance(model, p=p, q=q)
 
-    logger.info("Pre-process (quadrants) - Início do pré-processamento dos dados dos quadrantes.")
-    df_quadrants = preprocess_quadrants(df_accidents, df_stations)
+                # Resolve o modelo:
+                instance, is_feasible = solve_instance(instance)
 
-    logger.info("Pre-process - Fim do pré-processamento dos dados de entrada.")
+                # Atualiza a memória:
+                memory_p[p-1] = is_feasible
+
+                # Extrai os dados da soluçao:
+                if is_feasible:
+                    df_sol = get_solution_data(instance, df_quadrants)
     
-
 if __name__ == "__main__":
     main()
