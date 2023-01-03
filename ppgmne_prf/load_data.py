@@ -12,7 +12,21 @@ from ppgmne_prf.config.paths import PATH_DATA_CACHE_PRF
 from ppgmne_prf.utils import csv_zip_to_df, get_binary_from_url
 
 
-def load_accidents() -> pd.DataFrame:
+def load_data():
+    logger.info("Load data - Início do carregamento os dados de entrada.")
+
+    logger.info("Load data (accidents) - Carregando os dados históricos dos acidentes.")
+    df_accidents = __load_accidents()
+
+    logger.info("Load data (stations) - Carregando as coordenadas das UOPs e delegacias.")
+    dict_stations = __load_stations()
+
+    logger.info("Load data - Fim do carregamento os dados de entrada.")
+    
+    return df_accidents, dict_stations
+
+
+def __load_accidents() -> pd.DataFrame:
     """Função para extração do histórico de acidentes
 
     Returns
@@ -96,7 +110,7 @@ def load_accidents() -> pd.DataFrame:
 
     return df_out
 
-def load_stations() -> dict:
+def __load_stations() -> dict:
     """Função para obtenção do dicionário com as coordenadas dos limites da região parametrizada
 
     Returns
