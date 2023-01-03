@@ -10,45 +10,41 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.preprocessing import StandardScaler
 from unidecode import unidecode
 
-from ppgmne_prf.config.params import (
-    CLUSTER_DMAX,
-    CLUSTERING_FEATS,
-    COORDS_MIN_DECIMAL_PLACES,
-    COORDS_PRECISION,
-    MIN_DIST_TOLERANCE,
-    N_CLUSTERS,
-    STR_COLS_TO_LOWER,
-    STR_COLS_TO_UPPER,
-    UF,
-    URL_BORDERS,
-)
+from ppgmne_prf.config.params import (CLUSTER_DMAX, CLUSTERING_FEATS,
+                                      COORDS_MIN_DECIMAL_PLACES,
+                                      COORDS_PRECISION, MIN_DIST_TOLERANCE,
+                                      N_CLUSTERS, STR_COLS_TO_LOWER,
+                                      STR_COLS_TO_UPPER, UF, URL_BORDERS)
 from ppgmne_prf.config.paths import PATH_DATA_PRF
-from ppgmne_prf.utils import (
-    clean_string,
-    concatenate_dict_of_dicts,
-    get_binary_from_url,
-    get_decimal_places,
-    get_distance_matrix,
-    trace_df,
-)
+from ppgmne_prf.utils import (clean_string, concatenate_dict_of_dicts,
+                              get_binary_from_url, get_decimal_places,
+                              get_distance_matrix, trace_df)
 
 
 def preprocess(df_accidents: pd.DataFrame, dict_stations: dict) -> pd.DataFrame:
     logger.info("Pre-process - Início do pré-processamento dos dados de entrada.")
 
-    logger.info("Pre-process (accidents) - Início do pré-processamento dos dados dos acidentes.")
+    logger.info(
+        "Pre-process (accidents) - Início do pré-processamento dos dados dos acidentes."
+    )
     df_accidents = __preprocess_accidents(df_accidents)
 
-    logger.info("Pre-process (stations) - Início do pré-processamento dos dados das estações policiais.")
+    logger.info(
+        "Pre-process (stations) - Início do pré-processamento dos dados das estações policiais."
+    )
     df_stations = __preprocess_stations(dict_stations)
 
-    logger.info("Pre-process (quadrants) - Início do pré-processamento dos dados dos quadrantes.")
+    logger.info(
+        "Pre-process (quadrants) - Início do pré-processamento dos dados dos quadrantes."
+    )
     df_quadrants = __preprocess_quadrants(df_accidents, df_stations)
 
     logger.info("Pre-process - Fim do pré-processamento dos dados de entrada.")
     return df_quadrants
 
+
 ########## Accidents ##########
+
 
 def __preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
 
@@ -83,9 +79,12 @@ def __preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def __preprocess_stations(dict_coords: dict) -> pd.DataFrame:
-    
-    logger.info("Pre-process (stations) - Estruturando os dados das estações policiais.") 
+
+    logger.info(
+        "Pre-process (stations) - Estruturando os dados das estações policiais."
+    )
 
     dict_chars = {
         "type": [],
@@ -109,9 +108,7 @@ def __preprocess_stations(dict_coords: dict) -> pd.DataFrame:
 
             # Extrai as informações parcialmente tratadas:
             full_description = d["properties"]["description"].split("<br>")
-            longitude = float(
-                str(d["geometry"]["coordinates"][0]).replace(",", ".")
-            )
+            longitude = float(str(d["geometry"]["coordinates"][0]).replace(",", "."))
             latitude = float(str(d["geometry"]["coordinates"][1]).replace(",", "."))
 
             # Insere as informações iniciais no dicionário:
@@ -202,7 +199,8 @@ def __preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.Da
         .pipe(__get_quadrant_clusters)
         .pipe(trace_df)
         .pipe(__aggregate_quadrants)
-        .pipe(trace_df))
+        .pipe(trace_df)
+    )
 
     logger.info("Pre-process (quadrants) - Incluindo o DMAX na base.")
     df["dist_max"] = df["cluster"].map(CLUSTER_DMAX)
@@ -219,7 +217,7 @@ def __preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.Da
 
     return df
 
-           
+
 def __filter_uf(df: pd.DataFrame) -> pd.DataFrame:
     """Função para filtrar somente os registros nas delegacias da UF desejada.
 
@@ -369,7 +367,7 @@ def get_polygon():
         Polígono da região de interesse.
     """
     borders = json.load(get_binary_from_url(URL_BORDERS))["borders"][0]
-    
+
     lst_lon = [x["lng"] for x in borders]
     lst_lat = [x["lat"] for x in borders]
     polygon = Polygon(zip(lst_lon, lst_lat))
@@ -398,6 +396,7 @@ def within_polygon(lng: float, lat: float, polygon: Polygon) -> bool:
     isin_polygon = point.within(polygon)
 
     return isin_polygon
+
 
 def __manual_transformations(df: pd.DataFrame) -> pd.DataFrame:
     """Função para aplicar as correções necessárias identificadas após análise.
@@ -433,6 +432,7 @@ def __manual_transformations(df: pd.DataFrame) -> pd.DataFrame:
 
     return df_out
 
+
 def __remove_outlier_coords(df: pd.DataFrame) -> pd.DataFrame:
     """Função para remover registros de acidentes considerados outliers aos demais pontos alocados na mesma delegacia.
 
@@ -446,7 +446,9 @@ def __remove_outlier_coords(df: pd.DataFrame) -> pd.DataFrame:
     pd.DataFrame
         Data frame com outliers removidos.
     """
-    logger.info("Pre-process (accidents) - Eliminando as coordenadas outliers por delegacia.")
+    logger.info(
+        "Pre-process (accidents) - Eliminando as coordenadas outliers por delegacia."
+    )
 
     lat_abs_zscore = (
         df.groupby(["delegacia"])["latitude"]
@@ -528,6 +530,7 @@ def __identify_quadrant(df: pd.DataFrame) -> pd.DataFrame:
 
     return df_out
 
+
 def __get_quadrant_stats(df: pd.DataFrame) -> pd.DataFrame:
     """Função para calcular as estatísticas por quadrante.
 
@@ -560,6 +563,7 @@ def __get_quadrant_stats(df: pd.DataFrame) -> pd.DataFrame:
     df_out = df.merge(df_stats, on="quadrant_name")
 
     return df_out
+
 
 def __get_quadrant_clusters(df: pd.DataFrame) -> pd.DataFrame:
     """Função para clusterização dos quadrantes.
@@ -628,6 +632,7 @@ def __get_quadrant_clusters(df: pd.DataFrame) -> pd.DataFrame:
 
     return df_out
 
+
 def __aggregate_quadrants(df: pd.DataFrame) -> pd.DataFrame:
     """Função para criar a base de quadrantes agregados.
 
@@ -652,6 +657,7 @@ def __aggregate_quadrants(df: pd.DataFrame) -> pd.DataFrame:
 
     return df_out
 
+
 def __rename_corresp_quadrants(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
 
     logger.info("Pre-process (quadrants) - Renomeando os quadrantes correspondentes.")
@@ -667,6 +673,7 @@ def __rename_corresp_quadrants(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.Da
     df["name"] = df["uop_name"].combine_first(df["name"])
 
     return df
+
 
 def __find_corresp_quadrant(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
     """Função para encontrar o quadrante correspondente para cada UOP.
@@ -685,7 +692,9 @@ def __find_corresp_quadrant(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataF
         Base de UOPs com os quadrantes correspondentes encontrados.
     """
 
-    logger.info("Pre-process (quadrants) - Encontrando o quadrante correspondente para cada UOP.")
+    logger.info(
+        "Pre-process (quadrants) - Encontrando o quadrante correspondente para cada UOP."
+    )
 
     # Calcula a matriz de distâncias entre as UOPs e os quadrantes:
     dist_matrix = get_distance_matrix(
@@ -712,6 +721,7 @@ def __find_corresp_quadrant(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataF
 
     return df_uops
 
+
 def __add_only_uops(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
 
     logger.info("Adicionando as UOPs sem registro de acidentes.")
@@ -725,6 +735,7 @@ def __add_only_uops(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
     df = pd.concat([df, df_to_add], ignore_index=True)
 
     return df
+
 
 def __get_only_uops(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
     """Função para preparar a base de UOPs (only) para adicionar na base de quadrantes.

@@ -15,12 +15,13 @@ from unidecode import unidecode
 def get_response(url: str):
     context = ssl._create_unverified_context()
     r = request.urlopen(url, context=context)
-    if(r.getcode() == 200):
+    if r.getcode() == 200:
         out = r.read()
     else:
         logger.error("Erro ao obter os dados", r.getcode())
         out = None
     return out
+
 
 def get_json_from_url(url: str):
     out = get_response(url)
@@ -28,11 +29,13 @@ def get_json_from_url(url: str):
         out = json.loads(out)
     return out
 
+
 def get_binary_from_url(url: str):
     out = get_response(url)
     if out is not None:
         out = BytesIO(out)
     return out
+
 
 def csv_zip_to_df(
     url: str,

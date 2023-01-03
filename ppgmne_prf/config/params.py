@@ -1,13 +1,15 @@
 UF = "PR"
 URL_BORDERS = f"https://raw.githubusercontent.com/juniorssz/kml-brasil/master/lib/2010/estados/json/{UF}.json"
-URL_STATIONS = "https://drive.google.com/uc?export=download&id=12s-aFZjOFwHYbAeGuODpN2c9gaMw-jdk"
+URL_STATIONS = (
+    "https://drive.google.com/uc?export=download&id=12s-aFZjOFwHYbAeGuODpN2c9gaMw-jdk"
+)
 
 URLS_ACCIDENTS = {
     "2018": "https://arquivos.prf.gov.br/arquivos/index.php/s/MaC6cieXSFACNWT/download",
     "2019": "https://arquivos.prf.gov.br/arquivos/index.php/s/kRBUylqz6DyQznN/download",
     "2020": "https://arquivos.prf.gov.br/arquivos/index.php/s/rVfIQjF0wrwHa5P/download",
     "2021": "http://arquivos.prf.gov.br/arquivos/index.php/s/n1T3lymvIdDOzzb/download",
-    "2022": "http://arquivos.prf.gov.br/arquivos/index.php/s/OEtK0ObcP55Siei/download"
+    "2022": "http://arquivos.prf.gov.br/arquivos/index.php/s/OEtK0ObcP55Siei/download",
 }
 
 STR_COLS_TO_LOWER = [

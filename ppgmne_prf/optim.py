@@ -9,7 +9,8 @@ import pyomo.environ as pyo
 from loguru import logger
 from pyomo.opt import TerminationCondition
 
-from ppgmne_prf.config.paths import PATH_DATA_SOLVER_DETAILS, PATH_DATA_SOLVER_RESULTS
+from ppgmne_prf.config.paths import (PATH_DATA_SOLVER_DETAILS,
+                                     PATH_DATA_SOLVER_RESULTS)
 from ppgmne_prf.utils import get_distance_matrix
 
 
@@ -51,6 +52,7 @@ def get_fixed_params(df: pd.DataFrame) -> dict:
     out["s"] = s
 
     return out
+
 
 def get_abstract_model(
     a: int,
@@ -144,7 +146,8 @@ def get_abstract_model(
 
     return model
 
-def get_instance(model: pyo.AbstractModel, p: int, q:int = 0) -> pyo.ConcreteModel:
+
+def get_instance(model: pyo.AbstractModel, p: int, q: int = 0) -> pyo.ConcreteModel:
     """Função para gerar uma instância do modelo de p-Medianas.
 
     Parameters
@@ -161,14 +164,19 @@ def get_instance(model: pyo.AbstractModel, p: int, q:int = 0) -> pyo.ConcreteMod
     pyo.ConcreteModel
         Instância do modelo de p-Medianas.
     """
-    logger.info(f"Optimizer - Obtendo instância p = {p}, q = {q} do modelo de p-medianas.")
+    logger.info(
+        f"Optimizer - Obtendo instância p = {p}, q = {q} do modelo de p-medianas."
+    )
 
     params = __format_params({"p": p, "q": q})
     instance = model.create_instance(params)
 
     return instance
 
-def solve_instance(instance: pyo.ConcreteModel, solver: str = "gurobi") -> Tuple[pyo.ConcreteModel, bool]:
+
+def solve_instance(
+    instance: pyo.ConcreteModel, solver: str = "gurobi"
+) -> Tuple[pyo.ConcreteModel, bool]:
     logger.info(f"Optimizer - Resolvendo a instância via {solver}.")
 
     p = instance.p()
@@ -177,7 +185,9 @@ def solve_instance(instance: pyo.ConcreteModel, solver: str = "gurobi") -> Tuple
     logger.info(f"Optimizer - Obtendo os resultados da instância p = {p}, q = {q}.")
     result = pyo.SolverFactory(solver).solve(instance)
 
-    is_feasible = not result.solver.termination_condition == TerminationCondition.infeasible
+    is_feasible = (
+        not result.solver.termination_condition == TerminationCondition.infeasible
+    )
     is_optimal = result.solver.termination_condition == TerminationCondition.optimal
 
     logger.info(f"Optimizer - Solução factível: {is_feasible}")
@@ -186,21 +196,22 @@ def solve_instance(instance: pyo.ConcreteModel, solver: str = "gurobi") -> Tuple
     obj_function = 0
     if is_feasible:
         obj_function = instance.z()
-    
+
     logger.info(f"Optimizer - Função objetivo: {obj_function}")
 
     output_file = {}
-    output_file['name'] = model_name
+    output_file["name"] = model_name
     output_file["p"] = p
     output_file["q"] = q
-    output_file['solver'] = solver
-    output_file['is_feasible'] = is_feasible
-    output_file['is_optimal'] = is_optimal
-    output_file['obj_function'] = obj_function
+    output_file["solver"] = solver
+    output_file["is_feasible"] = is_feasible
+    output_file["is_optimal"] = is_optimal
+    output_file["obj_function"] = obj_function
     with open(PATH_DATA_SOLVER_RESULTS / f"{model_name}.json", "w") as f:
         json.dump(output_file, f, indent=4)
 
     return instance, is_feasible
+
 
 def get_solution_data(instance: pyo.ConcreteModel, df: pd.DataFrame) -> pd.DataFrame:
     """Função para extrair os resultados do modelo.
@@ -241,7 +252,7 @@ def get_solution_data(instance: pyo.ConcreteModel, df: pd.DataFrame) -> pd.DataF
     aloc_tuple.sort(key=lambda x: x[0])
     df_demand["median_name"] = [df_demand["name"][tupla[1] - 1] for tupla in aloc_tuple]
     df_demand["distance_q_to_m"] = [instance.d[x[0], x[1]]() for x in aloc_tuple]
-    df_demand['obj_function'] = df_demand['n_accidents'] * df_demand["distance_q_to_m"]
+    df_demand["obj_function"] = df_demand["n_accidents"] * df_demand["distance_q_to_m"]
 
     # Adiciona as coordenadas das medianas:
     df_demand = df_demand.merge(df_median, on=["median_name"])
@@ -256,6 +267,7 @@ def get_solution_data(instance: pyo.ConcreteModel, df: pd.DataFrame) -> pd.DataF
         pickle.dump(df_demand, f)
 
     return df_demand
+
 
 def __format_params(params: dict) -> pyo.DataPortal:
     """Função para formatar um dicionário de parâmetros para criação de instâncias do modelo.

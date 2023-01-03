@@ -18,11 +18,13 @@ def load_data():
     logger.info("Load data (accidents) - Carregando os dados históricos dos acidentes.")
     df_accidents = __load_accidents()
 
-    logger.info("Load data (stations) - Carregando as coordenadas das UOPs e delegacias.")
+    logger.info(
+        "Load data (stations) - Carregando as coordenadas das UOPs e delegacias."
+    )
     dict_stations = __load_stations()
 
     logger.info("Load data - Fim do carregamento os dados de entrada.")
-    
+
     return df_accidents, dict_stations
 
 
@@ -74,7 +76,7 @@ def __load_accidents() -> pd.DataFrame:
         "regional": Column(str, nullable=True),
         "delegacia": Column(str, nullable=True),
         "uop": Column(str, nullable=True),
-        }
+    }
 
     # Read data:
     df_out = pd.DataFrame()
@@ -85,8 +87,10 @@ def __load_accidents() -> pd.DataFrame:
         df = csv_zip_to_df(url, file_name)
         df["ano"] = year
 
-        logger.info(f"Load data (accidents) - Lendo os registros de acidentes de {year}.")
-        df_out = pd.DataFrame()  
+        logger.info(
+            f"Load data (accidents) - Lendo os registros de acidentes de {year}."
+        )
+        df_out = pd.DataFrame()
         # Valida os dados de entrada:
         try:
             df = DataFrameSchema(
@@ -96,10 +100,12 @@ def __load_accidents() -> pd.DataFrame:
                 strict="filter",
             ).validate(df)
         except SchemaError as se:
-            logger.error(f"Load data (accidents) - Erro ao validar os dados dos acidentes de {year}.")
+            logger.error(
+                f"Load data (accidents) - Erro ao validar os dados dos acidentes de {year}."
+            )
             logger.error(se)
 
-        # Concatena os anos: 
+        # Concatena os anos:
         if df_out.shape[0] == 0:
             df_out = df.copy()
         else:
@@ -109,6 +115,7 @@ def __load_accidents() -> pd.DataFrame:
     df_out.to_pickle(accidents_cache_path)
 
     return df_out
+
 
 def __load_stations() -> dict:
     """Função para obtenção do dicionário com as coordenadas dos limites da região parametrizada
@@ -131,9 +138,7 @@ def __load_stations() -> dict:
     out = kml2geojson.main.convert(kml_file)
 
     # ---- armazena da cache:
-    with open(stations_cache_path, "w") as file: 
+    with open(stations_cache_path, "w") as file:
         json.dump(out, file)
 
     return out
-
-

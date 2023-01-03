@@ -1,11 +1,6 @@
 from ppgmne_prf.load_data import load_data
-from ppgmne_prf.optim import (
-    get_abstract_model,
-    get_fixed_params,
-    get_instance,
-    get_solution_data,
-    solve_instance,
-)
+from ppgmne_prf.optim import (get_abstract_model, get_fixed_params,
+                              get_instance, get_solution_data, solve_instance)
 from ppgmne_prf.preprocess import preprocess
 
 
@@ -26,13 +21,13 @@ def main():
         accidents_hist=dict_params["accidents_hist"],
     )
 
-    memory_p = [True for x in range(1,81)]
+    memory_p = [True for x in range(1, 81)]
     for q in range(34):
 
         # for p in range(1,81):
-        for p in range(29,81):
+        for p in range(29, 81):
 
-            if p >= q and memory_p[p-1]:
+            if p >= q and memory_p[p - 1]:
 
                 # Cria a instância:
                 instance = get_instance(model, p=p, q=q)
@@ -41,11 +36,12 @@ def main():
                 instance, is_feasible = solve_instance(instance)
 
                 # Atualiza a memória:
-                memory_p[p-1] = is_feasible
+                memory_p[p - 1] = is_feasible
 
                 # Extrai os dados da soluçao:
                 if is_feasible:
                     df_sol = get_solution_data(instance, df_quadrants)
-    
+
+
 if __name__ == "__main__":
     main()
