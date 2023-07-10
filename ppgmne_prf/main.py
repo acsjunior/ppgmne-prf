@@ -1,6 +1,11 @@
 from ppgmne_prf.load_data import load_data
-from ppgmne_prf.optim import (get_abstract_model, get_fixed_params,
-                              get_instance, get_solution_data, solve_instance)
+from ppgmne_prf.optim import (
+    get_abstract_model,
+    get_fixed_params,
+    get_instance,
+    get_solution_data,
+    solve_instance,
+)
 from ppgmne_prf.preprocess import preprocess
 
 
@@ -21,26 +26,20 @@ def main():
         accidents_hist=dict_params["accidents_hist"],
     )
 
-    memory_p = [True for x in range(1, 81)]
-    for q in range(34):
+    P = [p for p in range(1, 80 + 1)]
+    Q = [q for q in range(0, 33 + 1)]
+    PQ = [(p, q) for p in P for q in Q if q <= p]
 
-        # for p in range(1,81):
-        for p in range(29, 81):
+    for pair in PQ:
+        # Cria a instância:
+        instance = get_instance(model, p=pair[0], q=pair[1])
 
-            if p >= q and memory_p[p - 1]:
+        # Resolve o modelo:
+        instance, is_feasible = solve_instance(instance)
 
-                # Cria a instância:
-                instance = get_instance(model, p=p, q=q)
-
-                # Resolve o modelo:
-                instance, is_feasible = solve_instance(instance)
-
-                # Atualiza a memória:
-                memory_p[p - 1] = is_feasible
-
-                # Extrai os dados da soluçao:
-                if is_feasible:
-                    df_sol = get_solution_data(instance, df_quadrants)
+        # Extrai os dados da soluçao:
+        if is_feasible:
+            df_sol = get_solution_data(instance, df_quadrants)
 
 
 if __name__ == "__main__":
