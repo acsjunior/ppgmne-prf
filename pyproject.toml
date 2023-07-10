@@ -11,15 +11,17 @@ python = "^3.9"
 pandas = "^1.5.2"
 pyomo = "^6.4.4"
 gurobipy = "^10.0.0"
-loguru = "^0.6.0"
 haversine = "^2.7.0"
 pandera = "^0.13.4"
 unidecode = "^1.3.6"
 holidays = "^0.17.2"
 shapely = "^1.8.5.post1"
 scipy = "^1.9.3"
-kml2geojson = "^5.1.0"
 scikit-learn = "^1.2.0"
+geopandas = "^0.13.2"
+loguru = "^0.7.0"
+kml2geojson = "^5.1.0"
+requests = "^2.31.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -28,6 +30,8 @@ black = "^22.12.0"
 isort = "^5.10.1"
 notebook = "^6.5.2"
 bandit = "^1.7.4"
+matplotlib = "^3.6.2"
+seaborn = "^0.12.2"
 
 [build-system]
 requires = ["poetry-core"]

@@ -8,7 +8,7 @@
     "python.envFile": "${workspaceFolder}/.env",
     "python.linting.banditEnabled": true,
     "editor.formatOnSave": true,
-    "python.formatting.provider": "black",
+    "python.formatting.provider": "none",
     "isort.args": [
         "--profile",
         "black"
@@ -16,7 +16,8 @@
     "[python]": {
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
-        }
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter"
     },
     "python.linting.banditArgs": [
         "--ignore=B101",
