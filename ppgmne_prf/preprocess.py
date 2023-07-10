@@ -10,15 +10,27 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.preprocessing import StandardScaler
 from unidecode import unidecode
 
-from ppgmne_prf.config.params import (CLUSTER_DMAX, CLUSTERING_FEATS,
-                                      COORDS_MIN_DECIMAL_PLACES,
-                                      COORDS_PRECISION, MIN_DIST_TOLERANCE,
-                                      N_CLUSTERS, STR_COLS_TO_LOWER,
-                                      STR_COLS_TO_UPPER, UF, URL_BORDERS)
+from ppgmne_prf.config.params import (
+    CLUSTER_DMAX,
+    CLUSTERING_FEATS,
+    COORDS_MIN_DECIMAL_PLACES,
+    COORDS_PRECISION,
+    MIN_DIST_TOLERANCE,
+    N_CLUSTERS,
+    STR_COLS_TO_LOWER,
+    STR_COLS_TO_UPPER,
+    UF,
+    URL_BORDERS,
+)
 from ppgmne_prf.config.paths import PATH_DATA_PRF
-from ppgmne_prf.utils import (clean_string, concatenate_dict_of_dicts,
-                              get_binary_from_url, get_decimal_places,
-                              get_distance_matrix, trace_df)
+from ppgmne_prf.utils import (
+    clean_string,
+    concatenate_dict_of_dicts,
+    get_binary_from_url,
+    get_decimal_places,
+    get_distance_matrix,
+    trace_df,
+)
 
 
 def preprocess(df_accidents: pd.DataFrame, dict_stations: dict) -> pd.DataFrame:
@@ -27,17 +39,17 @@ def preprocess(df_accidents: pd.DataFrame, dict_stations: dict) -> pd.DataFrame:
     logger.info(
         "Pre-process (accidents) - Início do pré-processamento dos dados dos acidentes."
     )
-    df_accidents = __preprocess_accidents(df_accidents)
+    df_accidents = preprocess_accidents(df_accidents)
 
     logger.info(
         "Pre-process (stations) - Início do pré-processamento dos dados das estações policiais."
     )
-    df_stations = __preprocess_stations(dict_stations)
+    df_stations = preprocess_stations(dict_stations)
 
     logger.info(
         "Pre-process (quadrants) - Início do pré-processamento dos dados dos quadrantes."
     )
-    df_quadrants = __preprocess_quadrants(df_accidents, df_stations)
+    df_quadrants = preprocess_quadrants(df_accidents, df_stations)
 
     logger.info("Pre-process - Fim do pré-processamento dos dados de entrada.")
     return df_quadrants
@@ -46,8 +58,7 @@ def preprocess(df_accidents: pd.DataFrame, dict_stations: dict) -> pd.DataFrame:
 ########## Accidents ##########
 
 
-def __preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
-
+def preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
     logger.info("Pre-process (accidents) - Removendo registros incompletos.")
     df = df.dropna().pipe(trace_df).copy()
 
@@ -80,8 +91,7 @@ def __preprocess_accidents(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def __preprocess_stations(dict_coords: dict) -> pd.DataFrame:
-
+def preprocess_stations(dict_coords: dict) -> pd.DataFrame:
     logger.info(
         "Pre-process (stations) - Estruturando os dados das estações policiais."
     )
@@ -105,7 +115,6 @@ def __preprocess_stations(dict_coords: dict) -> pd.DataFrame:
 
     for d in dict_coords[0]["features"]:
         if d["type"] == "Feature":
-
             # Extrai as informações parcialmente tratadas:
             full_description = d["properties"]["description"].split("<br>")
             longitude = float(str(d["geometry"]["coordinates"][0]).replace(",", "."))
@@ -183,8 +192,7 @@ def __preprocess_stations(dict_coords: dict) -> pd.DataFrame:
     return df_out
 
 
-def __preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.DataFrame:
-
+def preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.DataFrame:
     # Seleciona as UOPs:
     df_uops = df_stations.query('type == "UOP"').copy()
     df_uops["latitude"] = df_uops["latitude"].round(COORDS_PRECISION)
@@ -659,7 +667,6 @@ def __aggregate_quadrants(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def __rename_corresp_quadrants(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
-
     logger.info("Pre-process (quadrants) - Renomeando os quadrantes correspondentes.")
 
     df_corresp = __find_corresp_quadrant(df, df_uops)
@@ -723,7 +730,6 @@ def __find_corresp_quadrant(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataF
 
 
 def __add_only_uops(df: pd.DataFrame, df_uops: pd.DataFrame) -> pd.DataFrame:
-
     logger.info("Adicionando as UOPs sem registro de acidentes.")
 
     df_corresp = __find_corresp_quadrant(df, df_uops)
