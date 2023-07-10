@@ -5,11 +5,11 @@ URL_STATIONS = (
 )
 
 URLS_ACCIDENTS = {
-    "2018": "https://arquivos.prf.gov.br/arquivos/index.php/s/MaC6cieXSFACNWT/download",
-    "2019": "https://arquivos.prf.gov.br/arquivos/index.php/s/kRBUylqz6DyQznN/download",
-    "2020": "https://arquivos.prf.gov.br/arquivos/index.php/s/rVfIQjF0wrwHa5P/download",
-    "2021": "http://arquivos.prf.gov.br/arquivos/index.php/s/n1T3lymvIdDOzzb/download",
-    "2022": "http://arquivos.prf.gov.br/arquivos/index.php/s/OEtK0ObcP55Siei/download",
+    "2018": "https://drive.google.com/uc?export=download&id=1cM4IgGMIiR-u4gBIH5IEe3DcvBvUzedi",
+    "2019": "https://drive.google.com/uc?export=download&id=1pN3fn2wY34GH6cY-gKfbxRJJBFE0lb_l",
+    "2020": "https://drive.google.com/uc?export=download&id=1esu6IiH5TVTxFoedv6DBGDd01Gvi8785",
+    "2021": "https://drive.google.com/uc?export=download&id=12xH8LX9aN2gObR766YN3cMcuycwyCJDz",
+    "2022": "https://drive.google.com/uc?export=download&id=1PRQjuV5gOn_nn6UNvaJyVURDIfbSAK4-",
 }
 
 STR_COLS_TO_LOWER = [
