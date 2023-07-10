@@ -78,6 +78,7 @@ def clean_string(
     df: pd.DataFrame,
     target: Union[list, str],
     mode: Literal["lower", "upper"] = "lower",
+    replace_to_empty: str = "'",
 ) -> pd.DataFrame:
     """_summary_
 
@@ -98,7 +99,13 @@ def clean_string(
     if isinstance(target, str):
         target = [target]
     for col in target:
-        df[col] = df[col].apply(unidecode).str.strip().str.lower()
+        df[col] = (
+            df[col]
+            .apply(unidecode)
+            .str.strip()
+            .str.replace(replace_to_empty, "")
+            .str.lower()
+        )
         if mode == "upper":
             df[col] = df[col].str.upper()
     return df
