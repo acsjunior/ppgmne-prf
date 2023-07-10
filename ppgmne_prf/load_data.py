@@ -90,7 +90,6 @@ def __load_accidents() -> pd.DataFrame:
         logger.info(
             f"Load data (accidents) - Lendo os registros de acidentes de {year}."
         )
-        df_out = pd.DataFrame()
         # Valida os dados de entrada:
         try:
             df = DataFrameSchema(
