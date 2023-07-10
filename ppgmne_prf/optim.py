@@ -9,8 +9,7 @@ import pyomo.environ as pyo
 from loguru import logger
 from pyomo.opt import TerminationCondition
 
-from ppgmne_prf.config.paths import (PATH_DATA_SOLVER_DETAILS,
-                                     PATH_DATA_SOLVER_RESULTS)
+from ppgmne_prf.config.paths import PATH_DATA_SOLVER_DETAILS, PATH_DATA_SOLVER_RESULTS
 from ppgmne_prf.utils import get_distance_matrix
 
 
@@ -61,6 +60,7 @@ def get_abstract_model(
     dist_max: np.ndarray,
     dist_matrix: np.ndarray,
     accidents_hist: np.ndarray,
+    fixed_uops=None,
 ) -> pyo.AbstractModel:
     """Função para gerar um modelo de p-medianas parcialmente abstrato.
 
@@ -95,7 +95,11 @@ def get_abstract_model(
     logger.info("Optimizer - Declarando os índices.")
     model.I = pyo.RangeSet(u)
     model.J = pyo.RangeSet(s)
-    model.U = pyo.RangeSet(a, u)
+    model.U = pyo.RangeSet(a + 1, s)
+
+    if fixed_uops is not None:
+        f = len(fixed_uops)
+        model.F = pyo.Set(initialize=fixed_uops + 1)
 
     logger.info("Optimizer - Declarando os parâmetros.")
     model.p = pyo.Param()
@@ -141,6 +145,13 @@ def get_abstract_model(
     model.restr_3 = pyo.Constraint(rule=f_restr3)
     model.restr_4 = pyo.Constraint(model.I, model.J, rule=f_restr4)
     model.restr_5 = pyo.Constraint(model.I, model.J, rule=f_restr5)
+
+    if fixed_uops is not None:
+
+        def f_restr6(model):
+            return sum(model.y[f] for f in model.F) == f
+
+        model.restr_6 = pyo.Constraint(rule=f_restr6)
 
     logger.info("Optimizer - Modelo de p-medianas gerado com sucesso.")
 
@@ -250,7 +261,7 @@ def get_solution_data(instance: pyo.ConcreteModel, df: pd.DataFrame) -> pd.DataF
     # Adiciona os resultados no dataset de demanda:
     aloc_tuple = [x for x in list(instance.x.keys()) if instance.x[x]() == 1]
     aloc_tuple.sort(key=lambda x: x[0])
-    df_demand["median_name"] = [df_demand["name"][tupla[1] - 1] for tupla in aloc_tuple]
+    df_demand["median_name"] = [df["name"][tupla[1] - 1] for tupla in aloc_tuple]
     df_demand["distance_q_to_m"] = [instance.d[x[0], x[1]]() for x in aloc_tuple]
     df_demand["obj_function"] = df_demand["n_accidents"] * df_demand["distance_q_to_m"]
 
