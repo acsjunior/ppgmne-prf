@@ -223,6 +223,11 @@ def preprocess_quadrants(df: pd.DataFrame, df_stations: pd.DataFrame) -> pd.Data
     df = __add_only_uops(df, df_uops)
     df.pipe(trace_df)
 
+    logger.info(
+        "Pre-process (quadrants) - Ordenando os quadrantes (UOPs atuais por último)."
+    )
+    df = df.sort_values(by="is_uop", ascending=True).reset_index(drop=True)
+
     return df
 
 
