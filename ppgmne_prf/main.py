@@ -28,9 +28,9 @@ def main():
 
     P = [p for p in range(1, 80 + 1)]
     Q = [q for q in range(0, 33 + 1)]
-    PQ = [(p, q) for p in P for q in Q if q <= p]
+    R = [(p, q) for p in P for q in Q if q <= p]
 
-    for pair in PQ:
+    for pair in R:
         # Cria a instância:
         instance = get_instance(model, p=pair[0], q=pair[1])
 
