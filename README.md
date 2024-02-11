@@ -1,8 +1,6 @@
-# OTIMIZAÇÃO DA LOCALIZAÇÃO DAS UNIDADES OPERACIONAIS DA POLÍCIA RODOVIÁRIA FEDERAL NO ESTADO DO PARANÁ: UMA ABORDAGEM BASEADA NO PROBLEMA DE P-MEDIANAS
+# Otimização da localização das unidades operacionais da Polícia Rodoviária Federal no estado do Paraná: uma abordagem baseada no problema de p-Medianas
 
 Dissertação apresentada ao curso de Pós-Graduação em Métodos Numéricos em Engenharia, Setor de Tecnologia e Ciências Exatas, Universidade Federal do Paraná, como requisito parcial para obtenção do título de Mestre em Métodos Numéricos em Engenharia
-
-<hr>
 
 ## Resumo
 
