@@ -1,0 +1,248 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arquivo para entrada de dados para a parte pré textual
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Basta digitar as informações indicidas, no formato 
+% apresentado.
+%
+%%%%%%%
+% Os dados solicitados são, na ordem:
+%
+% tipo do trabalho
+% componentes do trabalho 
+% título do trabalho
+% nome do autor
+% local 
+% data (ano com 4 dígitos)
+% orientador(a)
+% coorientador(a)(as)(es)
+% arquivo com dados bibliográficos
+% instituição
+% setor
+% programa de pós gradução
+% curso
+% preambulo
+% data defesa
+% CDU
+% errata
+% assinaturas - termo de aprovação
+% resumos & palavras chave
+% agradecimentos
+% dedicatoria
+% epígrafe
+
+
+% Informações de dados para CAPA e FOLHA DE ROSTO
+%----------------------------------------------------------------------------- 
+\tipotrabalho{Trabalho Acadêmico}
+%    {Relatório Técnico}
+%    {Dissertação}
+%    {Tese}
+%    {Monografia}
+
+% Marcar Sim para as partes que irão compor o documento pdf
+%----------------------------------------------------------------------------- 
+ \providecommand{\terCapa}{Sim}
+ \providecommand{\terFolhaRosto}{Sim}
+ \providecommand{\terTermoAprovacao}{Sim}
+ \providecommand{\terDedicatoria}{Sim}
+ \providecommand{\terFichaCatalografica}{Nao}
+ \providecommand{\terEpigrafe}{Nao}
+ \providecommand{\terAgradecimentos}{Sim}
+ \providecommand{\terErrata}{Nao}
+ \providecommand{\terListaFiguras}{Sim}
+ \providecommand{\terListaQuadros}{Sim}
+ \providecommand{\terListaTabelas}{Sim}
+ \providecommand{\terSiglasAbrev}{Nao}
+ \providecommand{\terResumos}{Sim}
+ \providecommand{\terSumario}{Sim}
+ \providecommand{\terAnexo}{Nao}
+ \providecommand{\terApendice}{Nao}
+ \providecommand{\terIndiceR}{Nao}
+%----------------------------------------------------------------------------- 
+
+\titulo{Otimização da localização das unidades operacionais da Polícia Rodoviária Federal no estado do Paraná: uma abordagem baseada no problema de p-Medianas}
+\autor{Antonio Carlos da Silva Júnior}
+\local{Curitiba}
+\data{2024} %Apenas ano 4 dígitos
+
+% Orientador ou Orientadora
+\orientador{Prof. Dr. Gustavo Valentim Loch}
+%Prof Emílio Eiji Kavamura, MSc}
+\orientadora{}
+% Pode haver apenas uma orientadora ou um orientador
+% Se houver os dois prevalece o feminino.
+
+% Em termos de coorientação, podem haver até quatro neste modelo
+% Sendo 2 mulhere e 2 homens.
+% Coorientador ou Coorientadora
+\coorientador{}%Prof Morgan Freeman, DSc}
+%\coorientadora{Prof\textordfeminine~Audrey Hepburn, DEng}
+
+% Segundo Coorientador ou Segunda Coorientadora
+\scoorientador{}
+%Prof Jack Nicholson, DEng}
+\scoorientadora{}
+%Prof\textordfeminine~Ingrid Bergman, DEng}
+% ----------------------------------------------------------
+\addbibresource{referencias.bib}
+
+% ----------------------------------------------------------
+\instituicao{%
+Universidade Federal do Paraná}
+
+\def \ImprimirSetor{}%
+%Setor de Tecnologia}
+
+\def \ImprimirProgramaPos{}%Programa de Pós Graduação em Engenharia de Construção Civil}
+
+\def \ImprimirCurso{}%
+%Curso de Engenharia Civil}
+
+\preambulo{
+Dissertação apresentada ao curso de Pós-Graduação em Métodos Numéricos em Engenharia, Setor de Tecnologia e Ciências Exatas, Universidade Federal do Paraná, como requisito parcial para obtenção do título de Mestre em Métodos Numéricos em Engenharia}
+%do grau de Bacharel em Expressão Gráfica no curso de Expressão Gráfica, Setor de Exatas da Universidade Federal do Paraná}
+
+%----------------------------------------------------------------------------- 
+
+\newcommand{\imprimirCurso}{}
+%Programa de P\'os Gradua\c{c}\~ao em Engenharia da Constru\c{c}\~ao Civil}
+
+\newcommand{\imprimirDataDefesa}{
+09 de Dezembro de 2018}
+
+\newcommand{\imprimircdu}{
+02:141:005.7}
+
+% ----------------------------------------------------------
+\newcommand{\imprimirerrata}{
+Elemento opcional da \cites[4.2.1.2]{NBR14724:2011}. Exemplo:
+
+\vspace{\onelineskip}
+
+FERRIGNO, C. R. A. \textbf{Tratamento de neoplasias ósseas apendiculares com
+reimplantação de enxerto ósseo autólogo autoclavado associado ao plasma
+rico em plaquetas}: estudo crítico na cirurgia de preservação de membro em
+cães. 2011. 128 f. Tese (Livre-Docência) - Faculdade de Medicina Veterinária e
+Zootecnia, Universidade de São Paulo, São Paulo, 2011.
+
+\begin{table}[htb]
+\center
+\footnotesize
+\begin{tabular}{|p{1.4cm}|p{1cm}|p{3cm}|p{3cm}|}
+  \hline
+   \textbf{Folha} & \textbf{Linha}  & \textbf{Onde se lê}  & \textbf{Leia-se}  \\
+    \hline
+    1 & 10 & auto-conclavo & autoconclavo\\
+   \hline
+\end{tabular}
+\end{table}}
+
+% Comandos de dados - Data da apresentação
+\providecommand{\imprimirdataapresentacaoRotulo}{}
+\providecommand{\imprimirdataapresentacao}{}
+\newcommand{\dataapresentacao}[2][\dataapresentacaoname]{\renewcommand{\dataapresentacao}{#2}}
+
+% Comandos de dados - Nome do Curso
+\providecommand{\imprimirnomedocursoRotulo}{}
+\providecommand{\imprimirnomedocurso}{}
+\newcommand{\nomedocurso}[2][\nomedocursoname]
+  {\renewcommand{\imprimirnomedocursoRotulo}{#1}
+\renewcommand{\imprimirnomedocurso}{#2}}
+
+
+% ----------------------------------------------------------
+\newcommand{\AssinaAprovacao}{
+
+\assinatura{%\textbf
+   {Professor} \\ UFPR}
+   \assinatura{%\textbf
+   {Professor} \\ ENSEADE}
+   \assinatura{%\textbf
+   {Professor} \\ TIT}
+   %\assinatura{%\textbf{Professor} \\ Convidado 4}
+      
+   \begin{center}
+    \vspace*{0.5cm}
+    %{\large\imprimirlocal}
+    %\par
+    %{\large\imprimirdata}
+    \imprimirlocal, \imprimirDataDefesa.
+    \vspace*{1cm}
+  \end{center}
+  }
+  
+% ----------------------------------------------------------
+%\newcommand{\Errata}{%\color{blue}
+%Elemento opcional da \textcite[4.2.1.2]{NBR14724:2011}. Exemplo:
+%}
+
+% ----------------------------------------------------------
+\newcommand{\EpigrafeTexto}{%\color{blue}
+\textit{``Não vos amoldeis às estruturas deste mundo, \\
+		mas transformai-vos pela renovação da mente, \\
+		a fim de distinguir qual é a vontade de Deus: \\
+		o que é bom, o que Lhe é agradável, o que é perfeito.\\
+		(Bíblia Sagrada, Romanos 12, 2)}
+}
+
+% ----------------------------------------------------------
+\newcommand{\ResumoTexto}{%\color{blue}
+Atualmente há 378 unidades operacionais (UOP) da Polícia Rodoviária Federal (PRF) em operação nas estradas e rodovias brasileiras. Estas unidades proporcionam importante capilaridade nas ações da PRF para a garantia da segurança viária. Contudo, ao longo dos anos diversas UOPs vêm sendo construídas, desativadas e reativadas de norte a sul do país. Decisões como estas implicam em consequências por longo período de tempo, o que torna essencial o uso de ferramentas de apoio à decisão para análise de alternativas. Uma vez que, segundo a Constituição Federal de 1988, eficiência é um dos princípios da Administração Pública do Brasil, este trabalho visa contribuir com a sociedade por meio de uma ferramenta baseada no problema de p-Medianas para determinar o número e a localização das UOPs do estado do Paraná. Esta ferramenta tem como objetivo reduzir o consumo de recursos públicos bem como elevar a qualidade do serviço prestado pela PRF à população. O estudo começou com um processo de limpeza e transformação dos dados, seguido por uma análise de \textit{cluster} para apoiar a definição das distâncias máximas que os pontos de acidentes podem estar das suas respectivas medianas. Após a formulação do modelo com o objetivo de minimizar a soma das distâncias entre as UOPs e os pontos de acidentes, ponderadas pelo histórico de acidentes registrados, os parâmetros foram variados para criar 2192 instâncias, que foram resolvidas para avaliação do comportamento da função objetivo. Na discussão dos resultados, quatro cenários foram explorados, destacando a identificação de 39 UOPs ideais e estratégias de expansão da rede até 50 UOPs. Também foram discutidas possíveis desativações e construções de novas UOPs, considerando a viabilidade das implementações. Além disso, cinco passos futuros foram mapeados com o intuito de aumentar a robustez dos resultados obtidos.
+} 
+
+\newcommand{\PalavraschaveTexto}{%\color{blue}
+Problema de Localização de Instalações; Problema de p-Medianas; Programação Inteira; Polícia Rodoviária Federal; Administração Pública.}
+
+% ----------------------------------------------------------
+\newcommand{\AbstractTexto}{%\color{blue}
+There are 378 Federal Highway Police (PRF) operating units (UOP) currently operating on Brazilian roads and highways. These units provide important capillarity in PRF actions to guarantee road safety. However, several UOPs have been built, deactivated, and reactivated across the country over the years. Decisions like these have long-term consequences, making the use of decision-support tools essential for analyzing alternatives. Knowing that efficiency is one of the principles of Brazil’s Public Administration, by the Federal Constitution of 1988, this work aims to contribute to society through a tool based on the p-Median problem to determine the number and location of UOPs of the state of Paraná. This tool aims to reduce the consumption of public resources, as well as increase the quality of the service provided by the PRF to the population. The study began with a data cleaning and transformation process, followed by a cluster analysis to support the definition of the maximum distances that accident points can be from their respective medians. After formulating the model to minimizing the sum of the distances between the UOPs and the accident points, weighted by the historical record of accidents, we varied the parameters to create and solve 2192 instances, to evaluate the behavior of the objective function. We explored four scenarios when discussing the results, highlighting the identification of 39 ideal stations and strategies for expanding the network up to 50 UOPs. We also discuss possible deactivations and construction of new stations, considering implementation forecasts. Furthermore, we mapped out five future steps to increase the robustness of the results obtained.
+}
+% ---
+\newcommand{\KeywordsTexto}{%\color{blue}
+Facility Location Problem; p-Median Problem; Integer Programming; Federal Highway Police; Public Administration.
+}
+
+% ----------------------------------------------------------
+\newcommand{\Resume}
+{%\color{blue}
+%Il s'agit d'un résumé en français.
+} 
+% ---
+\newcommand{\Motscles}
+{%\color{blue}
+ %latex. abntex. publication de textes.
+}
+
+% ----------------------------------------------------------
+\newcommand{\Resumen}
+{%\color{blue}
+%Este es el resumen en español.
+}
+% ---
+\newcommand{\Palabrasclave}
+{%\color{blue}
+%latex. abntex. publicación de textos.
+}
+
+% ----------------------------------------------------------
+\newcommand{\AgradecimentosTexto}{%\color{blue}
+A Deus por me proporcionar uma vida rica em saúde e proteção.
+
+Aos meus pais, Catarina e Antonio, pela criação que me tornou destemido frente aos desafios.
+
+À minha esposa Vivian pelo incentivo, suporte e companheirismo em todos os momentos.
+
+Ao meu orientador, professor Gustavo Loch, por ter acreditado em mim ao aceitar me orientar, e pelas valiosas contribuições.
+
+Aos professores Cassius Scarpin e Anselmo Chaves pela disponibilidade de sempre e pelo incentivo e apoio para o meu ingresso ao programa.
+
+Aos demais professores do PPGMNE por todos os ensinamentos e colaborações.
+
+Ao Grupo Boticário, em especial aos meus atuais e antigos líderes, por todo respaldo e confiança.
+}
+
+% ----------------------------------------------------------
+\newcommand{\DedicatoriaTexto}{%\color{blue}
+\textit{ Este trabalho é dedicado à minha filha Alícia, \\ a maior fonte de força e inspiração da minha vida.}
+	}

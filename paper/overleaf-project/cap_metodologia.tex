@@ -1,0 +1,221 @@
+\chapter{Metodologia}
+
+A metodologia utilizada consiste nas etapas exibidas na \autoref{fig:methodology_flow}. 
+
+\figura
+{Etapas da metodologia utilizada}
+{1}
+{fig/methodology/flow.png}
+{O autor}
+{methodology_flow}
+{}
+{}
+
+Todas as etapas foram realizadas com apoio computacional por meio da linguagem de programação Python \cite{python}, utilizando principalmente as seguintes bibliotecas: Poetry \cite{poetry}, para garantir a reprodutibilidade do estudo; Pandas \cite{pandas}, para análise e manipulação dos dados; Numpy  \cite{numpy}, para operações com matrizes e vetores; Scikit-learn \cite{scikit-learn}, para análise de \textit{cluster}; Pyomo \cite{pyomo_book, pyomo_paper}, para formulação e resolução do modelo matemático em conjunto com o solver Gurobi \cite{gurobi}.
+
+\section{Data Wrangling}
+
+\textit{Data Wrangling} (DW) é um processo pelo qual os dados necessários são identificados, extraídos, limpos e integrados, de modo a produzir um conjunto de dados adequado para análise \cite{Furche2016}. Na \autoref{fig:methodology_dw_flow}, os retângulos representam as etapas de \textit{data wrangling} realizada neste estudo, enquanto os cilíndros informam a quantidade de registros após cada processamento.
+
+\figura
+{Etapas do processo de data wrangling}
+{1}
+{fig/methodology/dw_flow.png}
+{O autor}
+{methodology_dw_flow}
+{}
+{}
+
+Os dados sobre acidentes foram extraídos da página eletrônica de dados abertos da PRF, que define dados abertos como dados institucionais acessíveis em formato legível por computador que qualquer pessoa usar e redistribuir de forma irrestrita \cite{DadosPRF}. O estudo considerou os acidentes ocorridos nas estradas e rodovias do Paraná entre os anos de 2018 e 2022. Portanto, foi necessário inicialmente concatenar os registros de cada ano e selecionar somente aqueles associados à SR do Paraná, formando um conjunto de dados composto por 37399 observações, em que cada observação corresponde a um acidente.
+
+Foi feita uma validação inicial para garantir a qualidade dos dados, a qual consistiu na identificação e eliminação de registros incompletos ou com coordenadas geográficas inconsistentes, resultando em um conjunto de dados com 36745. Em função das coordenadas geográficas dos acidentes, foi feito, em seguida, um processo para garantir somente os registros ocorridos dentro do Paraná. O procedimento avaliou se cada ponto estava contido ou não no polígono composto pelos limites do estado do Paraná, e ao término o conjunto de dados foi reduzido para 36572 observações. 
+
+Com o objetivo de identificar os pontos de acidentes inconsistentes com relação às delegacias aos quais estão associados, foi calculado o z-score (\autoref{eq:zscore}) sobre as coordenadas de latitude e longitude dos acidentes de cada delegacia. Os registros com o valor absoluto do z-score maior que 3 foram considerados outliers e, consequentemente, removidos, restando 36195 observações. 
+
+\begin{equation} \label{eq:zscore}
+z = \dfrac{x - \mu}{\sigma}
+\end{equation}
+
+Por meio do mapa disponibilizado na página de Unidades no site da PRF \cite{UnidadesPRF} foi extraído um arquivo do tipo kml com as informações geográficas das UOPs do Paraná. Foi feito um procedimento para transformar o kml em formato tabular, com o objetivo de acessar informações sobre as UOPs, em especial suas coordenadas geográficas. Para realizar o cruzamento com os dados dos acidentes foi necessário uma extensiva análise de geolocalização, uma vez que os códigos das UOPs presentes no conjunto de dados dos acidentes não correspondem ao identificador das UOPs do arquivo extraído. A \autoref{fig:methodology_accidents_uops_map} exibe a dispersão dos acidentes e das UOPs em todo o Paraná.
+
+\figurah
+{Dispersão dos acidentes e UOPs no estado do Paraná}
+{1}
+{fig/methodology/accidents_uops_map.png}
+{O autor}
+{methodology_accidents_uops_map}
+{}
+{}
+
+Para viabilizar a solução exata e, ao mesmo tempo, garantir uma precisão aceitável, as coordenadas de latitude e longitude foram arredondadas para 1 casa decimal. Em seguida, as observações foram agregadas somando a quantidade de acidentes por quadrante (região de aproximadamente 11,1km ao redor do ponto após arredondamento), resultando em um novo conjunto de dados com 419 observações (\autoref{fig:methodology_accidents_agg_map}). 
+
+\figurah
+{Dispersão dos acidentes agrupados por quadrante}
+{1}
+{fig/methodology/accidents_agg_map.png}
+{O autor}
+{methodology_accidents_agg_map}
+{}
+{}
+
+Cada quadrante recebeu um identificador único com base na seguinte regra: quando uma UOP está contida no quadrante, sua identificação é a da própria UOP fornecida pela PRF. Caso contrário, a identificação é composta pelo nome do município e um número sequencial.
+
+\section{Clusterização dos pontos} \label{sec:clustering}
+
+Com o objetivo de definir posteriormente a distância máxima que os quadrantes de acidentes poderão estar com relação às suas respectivas medianas, foi realizada uma análise de \textit{cluster} hierárquica aglomerativa em função da média mensal de acidentes nos quadrantes utilizando o método de Ward \cite{Ward1963}, um procedimento que tem como objetivo minimizar a variância intra-cluster. Neste tipo de análise, inicialmente cada observação é considerada um \textit{cluster} e gradualmente as observações são unidas, formando \textit{clusters} em função de uma medida de dissimilaridade, até restar um único \textit{cluster}. 
+
+\figurah
+{Dendrograma}
+{1}
+{fig/methodology/dendrogram.png}
+{O autor}
+{methodology_dendrogram}
+{}
+{}
+
+Na \autoref{fig:methodology_dendrogram} é possível avaliar a formação gradativa dos \textit{clusters}. Neste gráfico conhecido como dendrograma, cada linha horizontal representa a ligação entre dois \textit{clusters} para a formação de um novo, enquanto as linhas verticais representam a dissimilaridade entre os \textit{clusters} formados, o que significa que quanto maior a linha horizontal, menos similares são os \textit{clusters}.
+
+\tabela{Estatísticas da média mensal de acidentes por cluster}
+{\begin{tabular}{l|c|c|c|c|c|c}\hline
+    Cluster & Cont. & Média & D. Padr. & Mín. & Mediana & Máx.\\ \hline\hline
+    Muito frequente & 1 & 33.92 & - & 33.92 & 33.92 & 33.92 \\
+    Frequente & 5 & 18.49 & 3.15 & 13.61 & 20.08 & 21.26 \\
+    Comum & 13 & 7.90 & 1.07 & 6.72 & 7.65 & 10.23 \\
+    Incomum & 50 & 3.45 & 0.99 & 2.17 & 3.15 & 5.71 \\
+    Raro & 80 & 1.35 & 0.30 & 0.93 & 1.25 & 2.06 \\
+    Muito raro & 269 & 0.35 & 0.26 & 0.01 & 0.3 & 0.92 \\
+    \hline
+\end{tabular}}
+{O autor}{methodology_cluster_stats}{}{}
+
+
+Por meio de uma análise visual no dendrograma, foi decidido separar os quadrantes em 6 \textit{clusters}. A \autoref{tab:methodology_cluster_stats} exibe as estatísticas calculadas em função da média mensal de acidentes para cada um dos \textit{clusters}, e a \autoref{fig:methodology_accidents_cluster_map}, a dispersão dos quadrantes por \textit{cluster}.
+
+\figurah
+{Dispersão dos quadrantes por cluster}
+{1}
+{fig/methodology/accidents_cluster_map.png}
+{O autor}
+{methodology_accidents_cluster_map}
+{}
+{}
+
+A primeira coluna da \autoref{tab:methodology_cluster_stats} exibe os nome de cada \textit{cluster}. Estes nomes foram definidos com base nestas estatísticas. O \textit{cluster} Muito raro, por exemplo, representa os 269 quadrantes com média inferior a 1 acidente por mês. Na outra extremidade temos o \textit{cluster} Muito frequente, que representa o único quadrante com média superior a 33 acidentes por mês.
+
+\section{Formulação do modelo matemático}\label{sec:model_formulation}
+
+A seguir estão as notações usadas na formulação do PMP: \\
+
+\hline
+\textbf{Conjuntos:}
+
+$I \colon \text{Conjunto de quadrantes de acidentes,} \; I = \{1,2,\ldots,m\}\text{,}$
+
+$V \colon \text{Conjunto de quadrantes candidatos a UOP,} \; V = \{1,2,\ldots,m\}\text{,}$
+
+$U \colon \text{Conjunto de quadrantes com UOPs atuais,} \; U = \{m+1, m+2 \ldots, m + n\}\text{,}$
+
+$J \colon V \cup U.$ \\
+
+\hline
+\textbf{Parâmetros:}
+
+$w_i \colon \text{Histórico de acidente (demanda) no quadrante }i \in I\text{,}$
+
+$d_{ij} \colon \text{Distância entre o quadrante de acidente }i \in I \text{ e o quadrante candidato a UOP }j \in J \text{,}$
+
+$d_i^\text{max} \colon \text{Distância máxima que um quadrante de acidente }i \in I \text{ pode estar da UOP }j \in J\text{ ao qual é associado,}$
+
+$p \colon \text{Número total de UOPs da rede,}$
+
+$q \colon \text{Número mínimo de UOPs atuais a serem mantidas.}$ \\
+
+\hline
+\textbf{Variáveis de decisão:}
+
+$
+    y_j \colon
+    \begin{cases}
+      1: & \text{se uma UOP é instalada no quadrante candidato }j \in J \\
+      0: & \text{caso contrário,}
+    \end{cases}
+$
+
+$
+    x_{ij} \colon
+    \begin{cases}
+      1: & \text{se o quadrante de acidente }i \in I \text{ é associado à UOP }j \in J\\
+      0: & \text{caso contrário.}
+    \end{cases}
+$ \\ \\
+
+\hline
+\textbf{Formulação:}
+\begin{equation} \label{eq:obj_function}
+\text{Min. }Z = \sum\limits_{i \in I} \sum\limits_{j \in J} w_i d_{ij} x_{ij}.
+\end{equation}
+
+Sujeito a:
+
+\begin{equation} \label{eq:constraint1}
+\sum\limits_{j \in J} x_{ij} = 1 \;\; \forall i \in I \text{,}
+\end{equation}
+
+\begin{equation} \label{eq:constraint2}
+\sum\limits_{j \in J} y_{j} = p \text{,}
+\end{equation}
+
+\begin{equation} \label{eq:constraint3}
+\sum\limits_{u \in U} y_{u} \geq q \text{,}
+\end{equation}
+
+\begin{equation} \label{eq:constraint4}
+x_{ij} \leq y_j \;\; \forall i \in I \text{; }j \in J\text{,}
+\end{equation}
+
+\begin{equation} \label{eq:constraint5}
+d_{ij} x_{ij} \leq d_i^\text{max} \;\; \forall i \in I \text{; }j \in J\text{,}
+\end{equation}
+
+\begin{equation} \label{eq:constraint6}
+x_{ij} \in \{0,1\} \;\; \forall i \in I \text{, }j \in J\text{,}
+\end{equation}
+
+\begin{equation} \label{eq:constraint7}
+y_j \in \{0,1\} \;\; \forall j \in J\text{.}
+\end{equation}
+
+Neste modelo, a função objetivo \ref{eq:obj_function} minimiza a soma das distâncias ponderadas pela quantidade de acidentes. As restrições \ref{eq:constraint1} garantem que cada quadrante de acidente seja associado a somente uma UOP. A restrição \ref{eq:constraint2} define o número total de UOPs da rede. A restrição \ref{eq:constraint3} define o número mínimo de UOPs atuais a serem mantidas na rede. As restrições \ref{eq:constraint4} garantem que cada quadrante de acidente seja associado a somente UOPs instaladas. As restrições \ref{eq:constraint5} garantem que seja respeitada a distância máxima que um quadrante de acidente pode estar da UOP ao qual é associado. As restrições \ref{eq:constraint6} e \ref{eq:constraint7} garantem o domínio das variáveis de decisão.
+
+\section{Criação da matriz de distâncias}
+
+Para popular o parâmetro $d_{ij}$ exibido na \autoref{sec:model_formulation} foi necessário calcular a distância entre todos os pares de elementos dos conjuntos $I$ e $J$ e representá-las por meio de uma matriz de distâncias. O cálculo foi realizado por meio da fórmula de haversine (\autoref{eq:haversine}), utilizada para medir a distância entre dois pontos em uma esfera. Nesta expressão, $\theta$ e $\lambda$ representam, respectivamente, a latitude e longitude (em radianos) dos pontos, e $r = 6371$ é o raio da Terra em quilômetros \cite{Mahmoud2016}.
+
+\begin{equation} \label{eq:haversine}
+d = 2r \arcsen \sqrt{\sen^2 \left( \dfrac{\theta_2 - \theta_1}{2} \right) + \cos(\theta_1) \cos(\theta_2) \sen^2 \left( \dfrac{\lambda_2 - \lambda_1}{2}\right)} \text{.}
+\end{equation} 
+
+\section{Definição das distâncias máximas}
+
+O objetivo desta etapa é a definição dos valores do parâmetro $d_i^\text{max}$ apresentado na \autoref{sec:model_formulation}.
+
+\tabelah{Distâncias máximas entre quadrantes e UOPs}
+{\begin{tabular}{l|c|c}\hline
+    Cluster & Quadrantes & Dist. máxima (km) \\ \hline\hline
+    Muito frequente & 1 & 60\\
+    Frequente & 5 & 60\\
+    Comum & 13 & 120\\
+    Incomum & 50 & 120\\
+    Raro & 80 & 180\\
+    Muito raro & 269 & 180\\
+    \hline
+\end{tabular}}
+{O autor}{methodology_dmax}{}{}
+
+Após uma análise exploratória dados históricos dos acidentes, os valores foram defindos em função da segmentação realizada na \autoref{sec:clustering}, conforme exibido na \autoref{tab:methodology_dmax}.
+
+\section{Criação e resolução das instâncias} \label{sec:instances}
+
+Os parâmetros necessários para criação das instâncias do modelo formulado \autoref{sec:model_formulation} foram separados em dois grupos. O primeiro grupo é composto pelos parâmetros $w_i$, $d_{ij}$ e $d_i^{\text{max}}$, que são constantes em todas as instâncias. Já o segundo grupo, composto por $p$ e $q$, representam os parâmetros que serão variados em cada uma das instâncias. A partir do conjunto $R = \{P \times Q \mid q \leq p\}$, em que $P = \{1,2,3,\ldots,80\}$ e $Q = \{0,1,2,\ldots,33\}$, foram criadas 2192 instâncias, onde em cada instância os parâmetros $p$ e $q$ foram populados com os valores dos pares ordenados $(p,q)$ do conjunto $R$. Estas variações têm como objetivo a avaliação do impacto da FO.
+
+Os dados de cada uma das instâncias resolvidas foram armazenados e serviram de insumo para a análise dos resultados discutida no \autoref{cha:results}.

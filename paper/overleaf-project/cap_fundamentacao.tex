@@ -1,0 +1,139 @@
+\chapter{Fundamentação Teórica}
+
+Os Problemas de Localização de Instalações (FLPs) visam determinar a localização ideal de uma ou mais instalações para atender um conjunto de pontos de demanda. Em geral, os FLPs podem ser contínuos, ou seja, quando as instalações podem estar localizadas em qualquer lugar da região factível, ou discretos, que são os casos em que as instalações podem ser estabelecidas apenas em pontos candidatos \cite{Eiselt2011, AhmadiJavid2017}. O clássico problema de Weber, que visa determinar a localização de uma instalação minimizando os custos de produção e transporte \cite{Weber1909}, é um exemplo de FLP contínuo. Entretanto, as abordagens mais conhecidas estão associadas aos FLPs discretos, detalhados na \autoref{fig:flps_discretos}.
+
+\figura
+{Classificação dos problemas de localização discretos}
+{1}
+{fig/flps_discretos.png}
+{\textcite{Daskin2008} e \textcite{AhmadiJavid2017}}
+{flps_discretos}
+{}
+{}
+
+Destaca-se que transformar um problema contínuo em discreto para resolvê-lo de maneira computacionalmente mais eficiente é uma prática conhecida.
+
+\section{Problemas de cobertura}
+
+Nos problemas de cobertura há um pressuposto de que os pontos de demanda devem estar há uma distância ou tempo máximo das instalações às quais foram alocados para serem considerados cobertos, por exemplo, por um serviço. No Problema de Cobertura de Conjunto, do inglês \textit{Set Covering Problem} (SCP), o objetivo é minimizar o número de instalações necessárias, dada uma distância ou tempo máximo de cobertura. Em contraste, o problema de p-Centros, do inglês \textit{p-Center Problem} (PCP), objetiva minimizar a distância ou tempo de cobertura, dado um conjunto de instalações. Em ambos os problemas todos os pontos de demanda devem ser cobertos, o que pode não ser viável em determinados contextos. Diante disso, uma alternativa é o Problema de Máxima Cobertura, do inglês \textit{Maximal Covering Problem} (MCP), que tem como objetivo maximizar o número de pontos de demanda atendidos, dado um numero fixo de instalações e uma distância ou tempo máximo de cobertura.
+
+\criarsigla{SCP}{Problema de Cobertura de Conjunto}
+
+\criarsigla{PCP}{Problema de p-Centros}
+
+\criarsigla{MCP}{Problema de Máxima Cobertura}
+
+\textcite{Vianna2019} discutiu a otimização do número e da localização de detectores de gás em plantas químicas como um SCP. Por meio dos resultados obtidos após testes realizados em dois casos reais de engenharia, o autor concluiu que a abordagem proposta é eficiente e viável. Já \textcite{Park2020} estudaram o desenvolvimento de um plano de voo para drones fornecerem rede \textit{wireless} em áreas de desastre. Após experimentos computacionais os autores concluíram que a abordagem proposta por meio de algoritmo exato é viável para áreas em escala realista com até 100 pontos de demanda e 2km de raio de cobertura.
+
+\textcite{Lin2018} modelaram como um PCP a otimização da localização de postos de abastecimento de combustíveis alternativos, visando minimizar de forma equitativa os desvios de rota dos motoristas para realizar o reabastecimento. Os experimentos computacionais mostraram que podem existir diferentes soluções ótimas, mas elas estão associadas a diferentes distâncias totais de viagem. \textcite{Demange2020} discutiram a determinação da localização de abrigos em áreas florestais ameaçadas por incêndio como uma variação do PCP. Esta variacão considera a incerteza dos focos de incêndio e tem como objetivo minimizar a distância máxima de evacuação de qualquer zona (subdivisão do território em questão) até o abrigo mais próximo. Os autores concluíram por meio dos resultados dos experimentos que a abordagem é eficiente.
+
+Em um projeto de rede de cadeia de suprimentos, \textcite{Rahmani2018} abordaram a definição do raio de cobertura dos centros de distribuição como um MCP. Dada a complexidade da combinação do MCP com outros requisitos da rede, os experimentos considerando um problema em larga escala, embora tenham gerado resultados com qualidade satisfatória, necessitaram de tempo relativamente alto para atingi-los. \textcite{Muren2020} propuseram uma variação do MCP para alocação de recursos de forma balanceada. Após testarem o modelo proposto no serviço de compartilhamento de bicicletas de uma grande cidade chinesa, os autores concluíram que a abordagem é geral o suficiente para ser aplicada em diversos problemas e economia compartilhada.
+
+\section{Problemas de mediana}
+
+\criarsigla{FCP}{Problema de Custo Fixo}
+
+Nos problemas de mediana o intuito é definir a localização de um conjunto de instalações para melhor servir um conjunto de pontos de demanda. Enquanto nos problemas de cobertura há um foco mais individualizado nos pontos de demanda, nos problemas de mediana o objetivo é a minimização da distância média, normalmente ponderada pela demanda no ponto, entre os pontos de demanda e as instalações às quais foram alocados. A diferença fundamental entre o Problema de Custo Fixo, do inglês \textit{Fixed Charge Problem} (FCP) e o problema de p-Medianas , do inglês \textit{p-Median Problem} (PMP), é que o FCP objetiva minimizar o custo total de abertura das instalações, ao passo que o PMP desconsidera as diferenças entre os custos de abertura de cada instalação.
+
+\textcite{Ghamami2015} modelaram a decisão da localização de carregadores de veículos elétricos nos estacionamentos existentes nos centros das cidades como um FCP. Os autores concluíram que o modelo proposto além de ser viável, introduz um mecanismo para que o nível de serviço possa ser compensado com o custo da infraestrutura. \textcite{Cheng2021} resolveram um FCP considerando incerteza na demanda e na disponibilidade da instalação. Os autores adotaram um estrutura de otimização robusta, em que, no primeiro estágio ocorre a decisão de localização e no segundo estágio a decisão de alocação, podendo ela ser adiada até que as informações de incerteza sejam reveladas. O algoritmo proposto foi comparado com um algoritmo de referência e os autores concluíram que a abordagem proposta é capaz de resolver mais instâncias em menor tempo.
+
+\subsection{Problema de p-Medianas}
+
+A formulação básica do PMP tem como objetivo encontrar a localização de $p$ instalações em uma rede, de modo que o custo total seja mínimo. O custo depende da distância entre o ponto de demanda $i$ e a instalação $j$, e da demanda no ponto $i$. \textcite{Jamshidi2009} menciona algumas suposições do PMP básico:
+
+\begin{itemize}
+  \item Relação linear entre custo e distância;
+  \item Horizonte de tempo infinito;
+  \item Capacidade infinita das instalações;
+  \item Não considera custo inicial de setup;
+  \item Demanda constante nos pontos;
+  \item Instalações em localização fixa.
+\end{itemize}
+
+A seguir as notações utilizadas na formulação básica do PMP: \\
+
+\hline
+\textbf{Conjuntos:}
+
+$I \colon \text{Conjunto de pontos de demanda,} \; I = \{1,2,\ldots,m\}\text{,}$
+
+$J \colon \text{Conjunto de pontos candidatos,} \; J = \{1,2,\ldots,n\}\text{.}$ \\
+
+\hline
+\textbf{Parâmetros:}
+
+$w_i \colon \text{Demanda no ponto }i \in I\text{,}$
+
+$d_{ij} \colon \text{Distância do ponto de demanda }i \in I \text{ para o ponto candidato }j \in J \text{,}$
+
+$p \colon \text{Número de instalações a serem estabelecidas,}$ \\
+
+\hline
+\textbf{Variáveis de decisão:}
+
+$
+    y_j \colon
+    \begin{cases}
+      1: & \text{se uma instalação é estabelecida no ponto candidato }j \in J \\
+      0: & \text{caso contrário,}
+    \end{cases}
+$
+
+$
+    x_{ij} \colon
+    \begin{cases}
+      1: & \text{se o ponto de demanda }i \in I \text{ é associado à instalação }j \in J\\
+      0: & \text{caso contrário.}
+    \end{cases}
+$ \\ \\
+
+\hline
+
+Em termos das notações apresentadas, o PMP é formulado da seguinte forma:
+
+\begin{equation} \label{eq:fund_obj_function}
+\text{min }Z = \sum\limits_{i \in I} \sum\limits_{j \in J} w_i d_{ij} x_{ij}.
+\end{equation}
+
+Sujeito a:
+
+\begin{equation} \label{eq:fund_constraint1}
+\sum\limits_{j \in J} x_{ij} = 1 \;\; \forall i \in I \text{,}
+\end{equation}
+
+\begin{equation} \label{eq:fund_constraint2}
+\sum\limits_{j \in J} y_{j} = p \text{,}
+\end{equation}
+
+\begin{equation} \label{eq:fund_constraint3}
+x_{ij} \leq y_j \;\; \forall i \in I \text{, }j \in J\text{,}
+\end{equation}
+
+\begin{equation} \label{eq:fund_constraint4}
+x_{ij} \in \{0,1\} \;\; \forall i \in I \text{, }j \in J\text{,}
+\end{equation}
+
+\begin{equation} \label{eq:fund_constraint5}
+y_j \in \{0,1\} \;\; \forall j \in J\text{.}
+\end{equation}
+
+Neste modelo, a função objetivo \ref{eq:fund_obj_function} minimiza a soma das distâncias ponderadas pela demanda. As restrições \ref{eq:fund_constraint1} garantem que cada ponto de demanda seja associado a somente uma instalação. A restrição \ref{eq:fund_constraint2} define o número total de instalações a serem estabelecidas na rede. As restrições \ref{eq:fund_constraint3} garantem que cada ponto de demanda seja associado a somente instalações abertas. As restrições \ref{eq:fund_constraint4} e \ref{eq:fund_constraint5} garantem o domínio das variáveis de decisão.
+
+Modelos de p-Medianas podem ser resolvidos por métodos exatos ou aproximados. \textcite{Judecir2021} define os métodos exatos como métodos que garantem a solução ótima, desde que haja tempo e capacidade computacional suficientes. Já os métodos aproximados, segundo o autor, não garantem a otimalidade, mas geralmente encontram soluções factíveis satisfatórias em tempo consideravelmente menor com relação aos métodos exatos. Como exemplo de método exato podemos mencionar a Programação Linear Inteira Mista (PLIM). Quanto aos métodos aproximados, temos como exemplos os algoritmos heurísticos, metaheurísticos e de aprendizado por reforço.
+
+\criarsigla{PLIM}{Programação Linear Inteira Mista}
+
+\textcite{Nery2021} abordaram a determinação da localização de pontos apoio para veículos de auto socorro em Curitiba-PR como um PMP. Os autores discutiram possíveis cenários, a partir da resolução de uma série de modelos por meio de PLIM. \textcite{Wang2022} tiveram sucesso ao utilizarem um algoritmo de aprendizado por reforço para resolver o PMP em grande escala, com o objetivo de melhorar a performance com relação aos métodos aproximados tradicionalmente usados.
+
+Por meio de um algoritmo heurístico, \textcite{Tang2020} resolveram um PMP para definir a localização de centros logísticos na cidade de Jinan, China. Os autores relataram que a solução encontrada atendeu os requisitos logísticos de uma distribuidora de frutas e vegetais. \textcite{Jnokov2017} propuseram o uso de um algoritmo metaheurístico combinado com PLIM para resolver grandes problemas de otimização combinatorial. A partir de experimentos com um PMP, os autores constataram que a abordagem proposta foi capaz de melhorar a FO em 6,4\%, em comparação com a abordagem tradicional testada.
+
+\section{Outros problemas}
+
+Os problemas que não se enquadram em alguma das principais categorias exibidas na \autoref{fig:flps_discretos} (Problemas de Cobertura e Problemas de Mediana) foram classificados por \textcite{Eiselt2011, AhmadiJavid2017} como outros problemas. Entre os problemas mais conhecidos desta categoria está o Problema de p-Dispersão, do inglês \textit{p-Dispersion Problem} (PDP), que tem como proposta maximizar a distância mínima de separação entre qualquer par de instalações em uma rede.
+
+\criarsigla{PDP}{Problema de p-Dispersão}
+
+\textcite{Sayyady2016} discutiram a otimização da localização de sensores de tráfego em uma malha rodoviária. No cenário descrito pelos autores, o problema foi abordado como um PDP devido ao limite do número de sensores disponíveis, e ao objetivo de maximizar a diversidade dos dados coletados. Os autores avaliaram uma  nova abordagem para resolver o problema e, por meio de experimentos, concluíram que a nova abordagem é mais eficiente do que os métodos exatos, pois permite resolver problemas maiores dentro de um tempo de execução razoável. Com a necessidade de satisfazer as restrições de distanciamento social impostas como medida de segurança contra a COVID-19, \textcite{Kudela2020} avaliou a determinação da localização de pessoas em local como um PDP. Com os resultados obtidos por meio de experimentos, o autor concluiu que a abordagem é viável no respectivo cenário.
+
+
+

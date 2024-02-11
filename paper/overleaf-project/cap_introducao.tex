@@ -1,0 +1,89 @@
+\chapter{Introdução}
+
+No ano de 2022 foram registrados 64.447 acidentes em rodovias federais, sendo o Paraná o terceiro estado com o maior número de acidentes ocorridos nestas rodovias \cite{AcidentesCNT}. A responsabilidade pela segurança viária nos mais de 75 mil quilômetros de rodovias e estradas federais é da Polícia Rodoviária Federal (PRF), instituição policial que, embora criada em 1928, foi integrada ao Sistema Nacional de Segurança Pública somente após o advento da Constituição Federal de 1988 \cite{InstitucionalPRF}.
+
+\criarsigla{PRF}{Polícia Rodoviária Federal}
+
+A PRF se faz presente em todos os estados brasileiros por meio de suas Unidades Administrativas e Operacionais. As Unidades Administrativas são compostas pela Unidade Central ou Sede, localizada em Brasília-DF, pelas Superintendências Regionais (SRPRF), localizadas em cada estado, e pelas Delegacias, situadas nos mais diversos municípios brasileiros. Sob responsabilidade das Delegacias estão os postos de fiscalização, conhecidos como Unidades Operacionais (UOP), distribuídos nas rodovias sob a circunscrição do órgão, proporcionando importante capilaridade nas ações da PRF \cite{CidadaoPRF}.
+
+\criarsigla{SRPRF}{Superintendência Regional da PRF}
+\criarsigla{UOP}{Unidade Operacional}
+
+Acidentes ocorridos em rodovias federais podem ser registrados pelos próprios condutores de veículos envolvidos nos acidentes via internet ou presencialmente em uma UOP, desde que o acidente não seja caracterizado como relevante. Em caso de acidente relevante, o atendimento é iniciado com o recebimento da comunicação, em seguida a PRF se desloca até o local e prossegue com o levantamento dos dados e as demais providências necessárias, e finaliza o atendimento com a confecção de um Laudo Pericial de Acidente de Trânsito (LPAT) \cite{DATPRF, LPATPRF}. 
+
+\criarsigla{LPAT}{Laudo Pericial de Acidente de Trânsito}
+
+A PRF caracteriza um acidente como relevante quando pelo menos uma das situações ocorre:
+
+\begin{itemize}
+  \item Vítima lesionada ou morta;
+  \item Danos a bens públicos não concedidos à iniciativa privada;
+  \item Danos ao meio ambiente;
+  \item Condutor inabilitado, com Carteira Nacional de Habilitação (CNH) suspensa ou cassada;
+  \item Ocorrência de algum crime correlacionado diretamente ao acidente;
+  \item Vazamento ou derramamento de produto perigoso;  
+  \item Envolvimento de algum condutor sob influência de substância psicoativa de uso indevido;
+  \item Interrupções totais ou parciais da via com grave prejuízo à fluidez;
+  \item Ocorrência de incêndio ou submersão em algum dos veículos envolvidos \cite{UsuarioPRF}.
+\end{itemize}
+
+\criarsigla{CNH}{Carteira Nacional de Habilitação}
+
+Atualmente há 378 UOPs em atividade em todo o território nacional \cite{UnidadesPRF}. Contudo, UOPs vêm sendo construídas, desativadas e reativadas de norte a sul do país ao longo dos anos (\autoref{fig:uops_evolution}). Decisões como estas implicam em consequências por longo período de tempo, o que torna essencial o uso de ferramentas de apoio à decisão para análise de alternativas. A distância entre as UOPs e os locais onde ocorrem os acidentes, além de impactar no tempo de resposta da PRF, também interfere diretamente no consumo de recursos públicos para suprir o uso de combustíveis, realizar a manutenção das viaturas, adquirir novas viaturas e equipamentos, replanejar o efetivo de servidores, entre outras necessidades.
+
+\figura
+{Quantidade de UOPs no Brasil ao longo dos anos}
+{1}
+{fig/uops_evolution.png}
+{\textcite{ContasPRF2017}}
+{uops_evolution}
+{}
+{}
+
+Problemas envolvendo a decisão da localização de instalações, conhecidos na literatura como problema de localização de instalações, do inglês \textit{facility location problem} (FLP), há várias décadas atraem pesquisadores com foco tanto no setor privado (plantas industriais, bancos, instalações de varejo, etc.) como no setor público (hospitais, postos de serviços, etc.) \cite{Farahani2009}. 
+
+\textcite{Dzator2017} discutiram a importância da aplicação de um modelo de p-Medianas para definir a localização de postos de emergência na cidade de Mackay, Austrália. \textcite{Cintrano2018} analisaram modelos de p-Medianas para determinar a localização ótima de estações de compartilhamento de bicicleta em Málaga, Espanha. \textcite{Wheeler2019}, por meio de uma aplicação de p-Medianas, demonstrou como áreas de patrulha policial em Carrollton (EUA) podem se tornar mais eficientes. \textcite{Zapata2020} utilizaram um modelo de p-Medianas para realocar armazéns de uma empresa da indústria automotiva. \textcite{Soares2021} desenvolveram uma ferramenta computacional baseada em um modelo de p-Medianas para apoiar a decisão da localização de Hospitais de Campanha para atendimento a pacientes com COVID-19. 
+
+O problema de p-Medianas (PMP) é um FLP clássico que tem como intuito definir a localização de um conjunto de instalações para melhor servir um conjunto de pontos de demanda. Neste trabalho, a problemática será abordada com base no PMP.
+
+\criarsigla{FLP}{Problema de localização de instalações}
+\criarsigla{PMP}{Problema de p-Medianas}
+
+\section{Objetivo Geral}
+
+Este trabalho objetiva, por meio de modelo matemático, determinar o número e a localização das UOPs do estado do Paraná, de modo a minimizar as distâncias entre as UOPs e os locais dos acidentes.
+
+\section{Objetivos Específicos}
+
+Para atender ao objetivo geral, os objetivos específicos são:
+
+\begin{itemize}
+    \item Extrair os dados históricos de acidentes ocorridos nas rodovias do estado do Paraná;
+    \item Transformar e tratar inconsistências nos dados;
+    \item Formular e implementar computacionalmente o modelo matemático;
+    \item Propor o número ideal de UOPs na rede;
+    \item Propor a localização das UOPs considerando diferentes cenários;
+    \item Propor uma sequência de expansão da rede de UOPs.
+\end{itemize}
+
+\section{Importância e Justificativa}
+
+Eficiência é um dos princípios da Administração Pública do Brasil. De acordo com o artigo 37 da Constituição Federal: "A administração pública direta e indireta de qualquer dos Poderes da União, dos Estados, do Distrito Federal e dos Municípios obedecerá aos princípios de legalidade, impessoalidade, moralidade, publicidade e eficiência." \;\textcite{Brasil1988_gambiarra}. Segundo \textcite{Morais2009}, para obtenção dos resultados sociais aspirados pela sociedade, fazer uso dos recursos públicos com economia, zelo e dedicação não é suficiente, sendo necessário comprometimento político e institucional com um planejamento competente, de modo a oferecer serviços compatíveis com as necessidades da sociedade em extensão, qualidade e custos.
+
+\textcite{Chan2012} definem eficiência dos gastos públicos como a capacidade do governo de maximizar suas atividades econômicas, dado um nível de gastos, ou minimizar suas despesas, dado um nível de atividade econômica. De acordo com \textcite{Izquierdo2018}, a eficiência do gasto público é essencial não só para a promoção do crescimento econômico de longo prazo, mas também para melhorar a equidade. Os autores também mencionam que o Brasil se destaca entre os países da América Latina pelo desperdício em gastos públicos ineficientes.
+
+Assim sendo, este trabalho visa contribuir com a sociedade por meio de uma ferramenta com potencial para reduzir o consumo de recursos públicos, bem como elevar a qualidade do serviço prestado pela PRF à população, uma vez que a localização ótima das UOPs implica na redução do tempo de resposta da PRF nos atendimentos. Destaca-se que, embora o estudo limite-se ao estado do Paraná, a abordagem pode ser aplicada para os demais estados, bem como adaptada para para outras aplicações.
+
+\section{Estrutura do Trabalho}
+
+O presente trabalho está organizado em cinco capítulos. No primeiro é introduzido o tema do trabalho, bem como seus objetivos.
+
+No segundo capítulo é feita uma fundamentação teórica, na qual são explicadas as características dos principais Problemas de Localização de Instalações, com ênfase no Problema de p-Medianas.
+
+No terceiro capítulo é apresentada a metodologia utlizada no estudo, partindo do processo de data wrangling, clusterização dos pontos, formulação do modelo matemático até a geração das instâncias.
+
+No quarto capítulo são analisados os resultados obtidos e apresentadas diferentes opções de solução.
+
+Por fim, no quinto capítulo são realizadas as considerações finais e sugestões para trabalhos futuros.
+
+

@@ -1,0 +1,362 @@
+\chapter{Resultados e Discussão} \label{cha:results}
+
+\section{Soluções livres} \label{sec:solucoes_livres}
+
+O conjunto $F = \{ (p,q) \in R \mid p \geq 5 \}$ representa as 2178 soluções factíveis encontradas nas execuções detalhadas na \autoref{sec:instances}. A \autoref{fig:plot_fo_q0} exibe a FO em função do parâmetro $p$, considerando somente as soluções livres (SL) representadas pelo conjunto $SL = \{ (p,q) \in F \mid q = 0 \}$. Para apoiar a interpretação do comportamento da FO, adicionou-se no gráfico o decrescimento percentual da FO (DPFO) a cada incremento em $p$. Neste gráfico observa-se que a partir de $p = 36$ a DPFO se estabiliza e cada incremento em $p$ passa a reduzir menos de 2,5\% da FO, indicando que o aumento no número de medianas não tem impacto significativo na redução do valor da FO.
+
+\criarsigla{DPFO}{Decrescimento Percentual da FO}
+\criarsigla{SL}{Solução livre}
+
+\figurah
+{FO em função do número de medianas a serem instaladas}
+{1}
+{fig/results/plot_fo_q0.png}
+{O autor}
+{plot_fo_q0}
+{Soluções livres}
+{}
+
+Para a continuidade do estudo foram mantidas somente as SL em que $36 \leq p \leq 50$. Entre as 15 soluções que restaram, observou-se que 361 quadrantes (26 UOPs atuais e 335 UOPs candidatas) não foram escolhidos como mediana em qualquer das soluções. Dos 58 quadrantes que restaram, 29 foram escolhidos em todas as soluções, sendo 4 UOPs atuais e 25 UOPs candidatas (\autoref{tab:current_candidate_uops_aloc_q0}). Os 29 quadrantes restantes que foram escolhidos em somente parte das soluções, entre eles 3 UOPs atuais, são detalhados na \autoref{tab:uops_aloc_partial_q0}.
+
+\tabela{UOPs escolhidas em todas as soluções}
+{\begin{tabular}{l|l|l|l}\hline
+      & UOP & Atual & Município \\ \hline\hline
+    1 &               UOP06-DEL01-PR &   Sim &                Balsa Nova \\
+    2 &               UOP05-DEL01-PR &   Sim &                 Paranaguá \\
+    3 &               UOP02-DEL09-PR &   Sim &                 Paranavaí \\
+    4 &               UOP01-DEL02-PR &   Sim &               Pato Branco \\
+    5 &                 APUCARANA 01 &   Não &                 Apucarana \\
+    6 &                 ARAPONGAS 03 &   Não &                 Arapongas \\
+    7 &     CAMPINA GRANDE DO SUL 03 &   Não &     Campina Grande do Sul \\
+    8 &     CAMPINA GRANDE DO SUL 06 &   Não &     Campina Grande do Sul \\
+    9 &               CAMPO LARGO 04 &   Não &               Campo Largo \\
+    10 &  CAPITAO LEONIDAS MARQUES 01 &   Não &  Capitão Leônidas Marques \\
+    11 &                  CASCAVEL 04 &   Não &                  Cascavel \\
+    12 &         CORNELIO PROCOPIO 02 &   Não &         Cornélio Procópio \\
+    13 &                  CURITIBA 01 &   Não &                  Curitiba \\
+    14 &                  CURITIBA 03 &   Não &                  Curitiba \\
+    15 &                  CURITIBA 06 &   Não &                  Curitiba \\
+    16 &             FOZ DO IGUACU 04 &   Não &             Foz do Iguaçu \\
+    17 &                    IBAITI 01 &   Não &                    Ibaiti \\
+    18 &                     IRATI 02 &   Não &                     Irati \\
+    19 &               JACAREZINHO 01 &   Não &               Jacarezinho \\
+    20 &                  LONDRINA 02 &   Não &                  Londrina \\
+    21 &                   MARINGA 02 &   Não &                   Maringá \\
+    22 &                MEDIANEIRA 01 &   Não &                Medianeira \\
+    23 &                ORTIGUEIRA 08 &   Não &                Ortigueira \\
+    24 &              PONTA GROSSA 06 &   Não &              Ponta Grossa \\
+    25 & SANTO ANTONIO DO SUDOESTE 02 &   Não & Santo Antônio do Sudoeste \\
+    26 &      SAO JOSE DOS PINHAIS 03 &   Não &      São José dos Pinhais \\
+    27 &      SAO JOSE DOS PINHAIS 06 &   Não &      São José dos Pinhais \\
+    28 &         SAO MATEUS DO SUL 05 &   Não &         São Mateus do Sul \\
+    29 &          UNIAO DA VITORIA 02 &   Não &          União da Vitória \\
+ \hline
+\end{tabular}}
+{O autor}{current_candidate_uops_aloc_q0}{}{}
+
+A \autoref{fig:plot_sols_q0_partial_uops} exibe a alocação de cada uma das UOPs da \autoref{tab:uops_aloc_partial_q0}. Nela, observa-se que a transição da SL com 36 para 37 medianas ocorre com a instalação da UOP MANDIRITUBA 02. Já a transição para a solução com 38 medianas depende da desinstalação de FAROL 02 e instalação de CAMPO MOURAO 02 e UBIRATA 04. Por fim, a transição para a solução com 39 medianas ocorre com a desinstalação de CANTAGALO 01 e GUARAPUAVA 08, e instalação de GUARAPUAVA 03, PRUDENTOPOLIS 02 e VIRMOND 01. 
+
+\figurah
+{Alocações nas soluções livres}
+{1}
+{fig/results/plot_sols_q0_partial_uops.png}
+{O autor}
+{plot_sols_q0_partial_uops}
+{Desconsideradas as UOPs alocadas em todas as soluções}
+{}
+
+Percebe-se que, com exceção da transição para a SL com 37 medianas, não é possível fazer uma simples adição de UOP na rede e ainda mantê-la otimizada, o que pode não ser financeiramente viável. Entretanto, a situação muda quando observamos a solução livre com 39 medianas. Neste caso, para acrescentar mais 1 UOP na rede, basta instalar MORRETES 02. E, observando novamente a \autoref{fig:plot_sols_q0_partial_uops}, percebe-se que é possível expandir a rede até 42 UOPs por meio de simples adições. 
+
+\tabelah{UOPs escolhidas em parte das soluções}
+{\begin{tabular}{l|l|l|l|c}\hline
+   & UOP  & Atual  &  Município & Soluções \\ \hline\hline
+ 1 &             UOP04-DEL01-PR &   Sim &               Guaratuba & 12 (80\%) \\
+ 2 &             UOP02-DEL06-PR &   Sim & Marechal Cândido Rondon &  8 (53\%) \\
+ 3 &             UOP01-DEL04-PR &   Sim &                Cascavel &  2 (13\%) \\ \hline
+ 4 &             MANDIRITUBA 02 &   Não &             Mandirituba & 14 (93\%) \\
+ 5 &            CAMPO MOURAO 02 &   Não &            Campo Mourão & 13 (87\%) \\
+ 6 &                 UBIRATA 04 &   Não &                 Ubiratã & 13 (87\%) \\
+ 7 &              GUARAPUAVA 03 &   Não &              Guarapuava & 12 (80\%) \\
+ 8 &           PRUDENTOPOLIS 02 &   Não &           Prudentópolis & 12 (80\%) \\
+ 9 &                MORRETES 02 &   Não &                Morretes & 11 (73\%) \\
+10 &                MARIALVA 01 &   Não &                Marialva & 10 (67\%) \\
+11 &              GUARANIACU 01 &   Não &              Guaraniaçu &  9 (60\%) \\
+12 &                 MARINGA 01 &   Não &                 Maringá &  9 (60\%) \\
+13 &                  GUAIRA 03 &   Não &                  Guaíra &  8 (53\%) \\
+14 &                  TIBAGI 04 &   Não &                  Tibagi &  8 (53\%) \\
+15 &                   IMBAU 02 &   Não &                   Imbaú &  7 (47\%) \\
+16 & MARECHAL CANDIDO RONDON 04 &   Não & Marechal Cândido Rondon &  7 (47\%) \\
+17 &                  TIBAGI 03 &   Não &                  Tibagi &  7 (47\%) \\
+18 &                  CANDOI 05 &   Não &                  Candói &  6 (40\%) \\
+19 &              GUARANIACU 02 &   Não &              Guaraniaçu &  6 (40\%) \\
+20 &        NOVA LARANJEIRAS 02 &   Não &        Nova Laranjeiras &  6 (40\%) \\
+21 &                 VIRMOND 01 &   Não &                 Virmond &  6 (40\%) \\
+22 &                LONDRINA 03 &   Não &                Londrina &  5 (33\%) \\
+23 &                PALMEIRA 07 &   Não &                Palmeira &  4 (27\%) \\
+24 &               CANTAGALO 01 &   Não &               Cantagalo &  3 (20\%) \\
+25 &              GUARAPUAVA 08 &   Não &              Guarapuava &  3 (20\%) \\
+26 &               GUARATUBA 03 &   Não &               Guaratuba &  3 (20\%) \\
+27 &          TIJUCAS DO SUL 03 &   Não &          Tijucas do Sul &  3 (20\%) \\
+28 &                   FAROL 02 &   Não &                   Farol &  2 (13\%) \\
+29 &                CURITIBA 04 &   Não &                Curitiba &   1 (7\%) \\
+ \hline
+\end{tabular}}
+{O autor}{uops_aloc_partial_q0}{}{}
+
+Portanto, foi assumido neste momento que 39 é o número ideal de UOPs para a rede. A \autoref{fig:results_plot_map_sl39} ilustra a dispersão das UOPs na solução livre com 39 medianas (SL39).
+
+\figurah
+{Dispersão das UOPs na solução livre com 39 medianas}
+{1}
+{fig/results/plot_map_sl39.png}
+{O autor}
+{results_plot_map_sl39}
+{}
+{}
+
+Ja a tabela \autoref{tab:results_uops_table_sl39} exibe a lista das UOPs alocadas na SL 39.
+
+\tabelah{UOPs alocadas na solução livre com 39 medianas}
+{\begin{tabular}{l|l|l|l}\hline
+   & UOP  & Atual  &  Município \\ \hline\hline
+ 1 &               UOP01-DEL02-PR &   Sim &               Pato Branco \\
+ 2 &               UOP02-DEL09-PR &   Sim &                 Paranavaí \\
+ 3 &               UOP04-DEL01-PR &   Sim &                 Guaratuba \\
+ 4 &               UOP05-DEL01-PR &   Sim &                 Paranaguá \\
+ 5 &               UOP06-DEL01-PR &   Sim &                Balsa Nova \\ \hline
+ 6 &                 APUCARANA 01 &   Não &                 Apucarana \\
+ 7 &                 ARAPONGAS 03 &   Não &                 Arapongas \\
+ 8 &     CAMPINA GRANDE DO SUL 03 &   Não &     Campina Grande do Sul \\
+ 9 &     CAMPINA GRANDE DO SUL 06 &   Não &     Campina Grande do Sul \\
+10 &               CAMPO LARGO 04 &   Não &               Campo Largo \\
+11 &              CAMPO MOURAO 02 &   Não &              Campo Mourão \\
+12 &  CAPITAO LEONIDAS MARQUES 01 &   Não &  Capitão Leônidas Marques \\
+13 &                  CASCAVEL 04 &   Não &                  Cascavel \\
+14 &         CORNELIO PROCOPIO 02 &   Não &         Cornélio Procópio \\
+15 &                  CURITIBA 01 &   Não &                  Curitiba \\
+16 &                  CURITIBA 03 &   Não &                  Curitiba \\
+17 &                  CURITIBA 06 &   Não &                  Curitiba \\
+18 &             FOZ DO IGUACU 04 &   Não &             Foz do Iguaçu \\
+19 &                GUARANIACU 01 &   Não &                Guaraniaçu \\
+20 &                GUARAPUAVA 03 &   Não &                Guarapuava \\
+21 &                    IBAITI 01 &   Não &                    Ibaiti \\
+22 &                     IRATI 02 &   Não &                     Irati \\
+23 &               JACAREZINHO 01 &   Não &               Jacarezinho \\
+24 &                  LONDRINA 02 &   Não &                  Londrina \\
+25 &               MANDIRITUBA 02 &   Não &               Mandirituba \\
+26 &   MARECHAL CANDIDO RONDON 04 &   Não &   Marechal Cândido Rondon \\
+27 &                   MARINGA 02 &   Não &                   Maringá \\
+28 &                MEDIANEIRA 01 &   Não &                Medianeira \\
+29 &                ORTIGUEIRA 08 &   Não &                Ortigueira \\
+30 &              PONTA GROSSA 06 &   Não &              Ponta Grossa \\
+31 &             PRUDENTOPOLIS 02 &   Não &             Prudentópolis \\
+32 & SANTO ANTONIO DO SUDOESTE 02 &   Não & Santo Antônio do Sudoeste \\
+33 &      SAO JOSE DOS PINHAIS 03 &   Não &      São José dos Pinhais \\
+34 &      SAO JOSE DOS PINHAIS 06 &   Não &      São José dos Pinhais \\
+35 &         SAO MATEUS DO SUL 05 &   Não &         São Mateus do Sul \\
+36 &                    TIBAGI 04 &   Não &                    Tibagi \\
+37 &                   UBIRATA 04 &   Não &                   Ubiratã \\
+38 &          UNIAO DA VITORIA 02 &   Não &          União da Vitória \\
+39 &                   VIRMOND 01 &   Não &                   Virmond \\
+ \hline
+\end{tabular}}
+{O autor}{results_uops_table_sl39}{}{}
+
+\criarsigla{SL39}{Solução livre com 39 medianas}
+
+\subsection{Expansão da rede partindo da SL39} \label{ssec:expansao_sl39}
+
+Ao avaliar a \autoref{fig:plot_sols_q0_partial_uops}, foi percebido que é possível expandir a rede, partindo da SL39, até 42 UOPs por meio de simples adições. Entretanto, para expandir a rede para 43 UOPs torna-se necessário desinstalar MARECHAL CANDIDO RONDON 04, e instalar GUAIRA 03 e UOP02-DEL06-PR. Contudo, uma vez que a distância entre os quadrantes MARECHAL CANDIDO RONDON 04 e UOP02-DEL06-PR é de aproximadamente 11km, foi observado que, por um custo de 0,51\% na FO, é possível manter MARECHAL CANDIDO RONDON 04 na solução, incluindo apenas GUAIRA 03. 
+
+\tabelah{Impacto da realocação das UOPs}
+{\begin{tabular}{c|l|l|c|c}\hline
+ Rede ($p$) & UOP (de) & UOP (para) & Dist. & Impacto FO \\ \hline\hline
+ 43 & UOP02-DEL06-PR & MAL CAND RONDON 04 & 11 km & +0,51\% \\
+ 44 & TIBAGI 03 & TIBAGI 04 & 15 km & +0,93\% \\
+ 45 & GUARANIACU 02 & GUARANIACU 01 & 23 km & +1,12\% \\
+ 45 & CANDOI 05 & VIRMOND 01 & 15 km & +0,69\% \\
+ 48 & GUARATUBA 03 & UOP04-DEL01-PR & 10 km & +0,30\% \\
+ \hline
+\end{tabular}}
+{O autor}{uops_aloc_q0}{}{}
+
+A \autoref{tab:uops_aloc_q0}, exibe esta e as demais realocações necessárias para expansão da rede até 50 UOPs, por meio de simples adições na rede, bem como os respectivos impactos na FO. 
+
+\tabelah{Expansão da solução livre com 39 medianas}
+{\begin{tabular}{c|l|l|l}\hline
+ Rede ($p$) & UOP a incluir & Atual & Município \\ \hline\hline
+ 40 &         MORRETES 02 &   Não &         Morretes \\
+  41 &         MARIALVA 01 &   Não &         Marialva \\
+  42 &          MARINGA 01 &   Não &          Maringá \\
+  43 &           GUAIRA 03 &   Não &           Guaíra \\
+  44 &            IMBAU 02 &   Não &            Imbaú \\
+  45 & NOVA LARANJEIRAS 02 &   Não & Nova Laranjeiras \\
+  46 &         LONDRINA 03 &   Não &         Londrina \\
+  47 &         PALMEIRA 07 &   Não &         Palmeira \\
+  48 &   TIJUCAS DO SUL 03 &   Não &   Tijucas do Sul \\
+  49 &      UOP01-DEL04-PR &   Sim &         Cascavel \\
+  50 &         CURITIBA 04 &   Não &         Curitiba \\
+ \hline
+\end{tabular}}
+{O autor}{uops_expansion_q0}{}{}
+
+E, por fim, a \autoref{tab:uops_expansion_q0} exibe o plano de expansão da SL39 até 50 medianas.
+
+\section{Soluções restritas}
+
+Considerando as soluções restritas (SR) representadas pelo conjunto $SR = \{ (p,q) \in F \mid p = 39 \text{ e } q > 0 \}$, de maneira análoga ao gráfico da \autoref{fig:plot_fo_q0}, a \autoref{fig:plot_fo_p39} exibe a FO em função do parâmetro $q$. Observa-se no gráfico que a partir de $q = 15$ a DPFO se estabiliza e cada decremento em $q$ passa a reduzir menos de 0,25\% da FO, indicando que a partir deste ponto desobrigar o modelo a manter UOPs atuais na solução não impacta significativamente na redução do valor da FO.
+
+\figurah
+{FO em função do número mínimo de UOPs a serem mantidas}
+{1}
+{fig/results/plot_fo_p39.png}
+{O autor}
+{plot_fo_p39}
+{Soluções restritas com 39 medianas.}
+{}
+
+A solução restrita com 15 UOPs atuais (SR15) apresentou o valor de 383230 na FO, ao passo que o valor da FO da SL39 é de 378908. Nesta comparação observa-se que pelo custo de 1,15\% no valor da FO, é possível fixar 15 UOPs atuais na solução com 39 medianas. A \autoref{fig:results_plot_map_sr15} ilustra as dispersão das UOPs na SR15.
+
+\figurah
+{Dispersão das UOPs na solução com 39 medianas e 15 UOPs atuais}
+{1}
+{fig/results/plot_map_sr15.png}
+{O autor}
+{results_plot_map_sr15}
+{}
+{}
+
+Ja a tabela \autoref{tab:results_uops_table_sr15} exibe as substituições necessárias na SL39 (\autoref{tab:results_uops_table_sl39}) para transformar na SR15.
+
+\tabelah{Substituições necessárias de SL39 para SR15}
+{\begin{tabular}{l|l|l|l}\hline
+   & UOP (de)  & UOP (para)  &  Dist. \\ \hline\hline
+ 1 &         SAO MATEUS DO SUL 05 & UOP03-DEL07-PR &  10 km \\
+ 2 &                   VIRMOND 01 &   CANTAGALO 01 &  10 km \\
+ 3 &              CAMPO MOURAO 02 & UOP01-DEL09-PR &  10  km \\
+ 4 &                    TIBAGI 04 & UOP03-DEL09-PR &  11km \\
+ 5 &   MARECHAL CANDIDO RONDON 04 & UOP02-DEL06-PR &  11 km \\
+ 6 & SANTO ANTONIO DO SUDOESTE 02 & UOP03-DEL04-PR &  15 km \\
+ 7 &                   UBIRATA 04 & UOP04-DEL02-PR &  15 km \\
+ 8 &                GUARAPUAVA 03 & UOP02-DEL03-PR &  20 km \\
+ 9 &          UNIAO DA VITORIA 02 &    BARRACAO 04 &  23 km \\
+10 &                 APUCARANA 01 & UOP01-DEL08-PR &  23 km \\
+11 &  CAPITAO LEONIDAS MARQUES 01 & UOP02-DEL02-PR &  30 km \\
+12 &             PRUDENTOPOLIS 02 & UOP03-DEL02-PR & 192 km  \\
+ \hline
+\end{tabular}}
+{O autor}{results_uops_table_sr15}{}{}
+
+\criarsigla{SR}{Solução restrita}
+\criarsigla{SR15}{Solução restrita com 15 UOPs atuais}
+
+\subsection{Expansão da rede partindo da SR15}
+
+A \autoref{fig:plot_sols_q15_p39_partial_uops} exibe a alocação das UOPs da SR15 até a solução com 50 medianas, desprezando as UOPs alocadas em todas as soluções nesta faixa selecionada. Nela, observa-se que a transição de 40 para 41 medianas depende da desinstalação de CANTAGALO 01, UOP01-DEL08-PR e MORRETES 02, e a instalação de UOP01-DEL06-PR, GUARAPUAVA 03, PRUDENTOPOLIS 02 e VIRMOND 01. Além disso, nota-se que a MORRETES 02 volta a ser alocada na solução com 42 medianas. 
+
+\figurah
+{Alocações nas soluções restritas com 15 UOPs atuais}
+{1}
+{fig/results/plot_sols_q15_p39_partial_uops.png}
+{O autor}
+{plot_sols_q15_p39_partial_uops}
+{Desconsideradas as UOPs alocadas em todas as soluções}
+{}
+
+Com o intuito de reduzir o número de desinstalações necessárias durante o aumento do número de medianas, foram propostas as realocações exibidas na \autoref{tab:uops_aloc_q15_p39}, baseadas na abordagem realizada em \autoref{ssec:expansao_sl39}.
+
+\tabelah{Impacto da realocação das UOPs na solução restrita com 15 UOPs atuais}
+{\begin{tabular}{c|l|l|c|c}\hline
+ Rede ($p$) & UOP (de) & UOP (para) & Dist. & Impacto FO \\ \hline\hline
+ 41 & PRUDENTOPOLIS 02 & MORRETES 02 & 233 km & +20\% \\
+ 41 & VIRMOND 01 & CANTAGALO 01 & 10 km & +0,01\% \\
+ 41 & GUARAPUAVA 03 & UOP01-DEL08-PR & 20 km & +1,3\% \\
+ 41 & GUARANIACU 02 & GUARANIACU 01 & 23 km & +0,86\% \\
+ 44 & UNIAO DA VITORIA 01 & UOP03-DEL02-PR & 15 km & +0,31\% \\
+ 44 & CANDOI 05 & CANTAGALO 01 & 23 km & +1,03\% \\
+ 47 & CAPITAO LEONIDAS MARQUES 01 & UOP02-DEL02-PR & 30 km & +0,95\% \\
+ 47 & SANTO ANTONIO DO SUDOESTE 02 & BARRACAO 04 & 15 km & +0,29\% \\
+ 48 & IMBAU 02 & UOP02-DEL03-PR & 15 km & +0,59\% \\
+ 49 & UBIRATA 04 & UOP03-DEL04-PR & 15 km & +0,01\% \\
+ 50 & GUARATUBA 03 & UOP04-DEL01-PR & 10 km & +0,31\% \\
+ \hline
+\end{tabular}}
+{O autor}{uops_aloc_q15_p39}{}{}
+
+A \autoref{tab:uops_expansion_q15} exibe o plano de expansão da SR15 até 50 medianas.
+
+\tabelah{Expansão da solução restrita com 15 UOPs atuais}
+{\begin{tabular}{c|l|l|l}\hline
+ Rede ($p$) & UOP a incluir & Atual & Município \\ \hline\hline
+ 40 &       MORRETES 02 &   Não &           Morretes \\
+  41 &    UOP01-DEL06-PR &   Sim &             Guaíra \\
+  42 &  PRUDENTOPOLIS 02 &   Não &      Prudentópolis \\
+  43 &        MARINGA 01 &   Não &            Maringá \\
+  44 &    UOP02-DEL04-PR &   Sim & Laranjeiras do Sul \\
+  45 &       LONDRINA 03 &   Não &           Londrina \\
+  46 &       PALMEIRA 07 &   Não &           Palmeira \\
+  47 &    UOP01-DEL04-PR &   Sim &           Cascavel \\
+  48 &         TIBAGI 03 &   Não &             Tibagi \\
+  49 &    UOP04-DEL04-PR &   Sim &          Lindoeste \\
+  50 & TIJUCAS DO SUL 03 &   Não &     Tijucas do Sul \\
+ \hline
+\end{tabular}}
+{O autor}{uops_expansion_q15}{}{}
+
+\section{Soluções atuais}
+
+Com o objetivo de avaliar a rede atual de UOPs, gerou-se o conjunto de soluções atuais (SA) $SA = \{ (p,q) \in F \mid p = q \}$ e a partir dele foi gerado o gráfico da \autoref{fig:results_plot_fo_q33}. Neste gráfico observa-se que a partir de $p = 30$ cada incremento em $p$ passa a reduzir menos de 1\% da FO.
+
+\criarsigla{SA}{Solução atual}
+
+\figurah
+{FO em função do número de medianas a serem instaladas}
+{1}
+{fig/results/plot_fo_q33.png}
+{O autor}
+{results_plot_fo_q33}
+{Soluções considerando somente UOPs atuais}
+{}
+
+A solução atual com 29 UOPs atuais (SA29) apresentou o valor de 677026 na FO, enquanto o valor da FO da solução atual com 33 UOPs (SA33) é de 664280. Nesta comparação observa-se que por um custo de 1,92\% da FO seria possível desativar as 4 UOPs listadas na \autoref{tab:uops_q33_to_remove}.
+
+\criarsigla{SA29}{Solução atual com 29 UOPs}
+\criarsigla{SA33}{Solução atual com 33 UOPs}
+
+\tabelah{UOPs atuais com possibilidade de desativação}
+{\begin{tabular}{l|l|l}\hline
+   & UOP  &  Município \\ \hline\hline
+1 & UOP03-DEL06-PR &              Alto Paraíso \\
+2 & UOP04-DEL05-PR &             Foz do Iguaçu \\
+3 & UOP04-DEL04-PR &                 Lindoeste \\
+4 & UOP01-DEL05-PR & Santa Terezinha de Itaipu \\
+ \hline
+\end{tabular}}
+{O autor}{uops_q33_to_remove}{}{}
+
+Considerando um cenário em que todas as 33 UOPs atuais são aproveitadas em uma solução com 39 medianas, para atingir o número de medianas seria necessário adicionar as UOPs listadas na \autoref{tab:uops_q33_to_add}
+
+\tabelah{UOPs a serem adicionadas na solução com 33 UOPs atuais}
+{\begin{tabular}{l|l|l}\hline
+   & UOP  &  Município \\ \hline\hline
+1 &                 CAMBE 01 &                 Cambé \\
+2 & CAMPINA GRANDE DO SUL 06 & Campina Grande do Sul \\
+3 &              CURITIBA 01 &              Curitiba \\
+4 &              CURITIBA 03 &              Curitiba \\
+5 &              CURITIBA 06 &              Curitiba \\
+6 &               MARINGA 02 &               Maringá \\
+ \hline
+\end{tabular}}
+{O autor}{uops_q33_to_add}{}{}
+
+A \autoref{fig:results_plot_map_p39_q33} ilustra as alocações da SA33, considerando as inclusões listadas na \autoref{tab:uops_q33_to_add}.
+
+\figurah
+{Solução atual com 33 UOPs}
+{1}
+{fig/results/plot_map_p39_q33.png}
+{O autor}
+{results_plot_map_p39_q33}
+{}
+{}
+
